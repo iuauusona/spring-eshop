@@ -22,16 +22,22 @@ public class UserController {
     @GetMapping("/new")
     public String newModel(Model model){
         model.addAttribute("user", new UserDTO());
-        return "userPage";
+        return "user";
+    }
+
+    @GetMapping
+    public String userList(Model model){
+        model.addAttribute("users", userService.getAll());
+        return "userList";
     }
 
     @PostMapping("/new")
     public String saveUser(UserDTO dto, Model model){
         if(userService.save(dto)) {
-            return "redirect:/";
+            return "redirect:/users";
         }else{
             model.addAttribute("user", dto);
-            return "userPage";
+            return "user";
         }
     }
 }

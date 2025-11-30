@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.w3.org/1999/xhtml" xmlns:sec="http://www.w3.org/1999/xhtml">
+<head>
+  <meta charset="UTF-8">
+  <title>Menu Page</title>
+</head>
+<body>
+
+<div th:fragment="nav-menu" width="100%">
+  <table>
+    <tr>
+      <td align="center">
+          <table>
+            <tr>
+              <td>Menu</td>
+              <td><a th:href="@{/}">Home</a></td>
+              <td><a th:href="@{/products}">Products</a></td>
+              <td sec:authorize="hasAnyAuthority('ROLE_ADMIN', 'ROLE_MANAGER')"><a th:href="@{/users}">Users</a></td>
+            </tr>
+          </table>
+      </td>
+      <td align="right">
+        <div sec:authorize="isAuthenticated()">
+          <div>
+            Hello, <span sec:authentication="principal.username">Bill</span>
+          </div>
+          <div>
+            <a th:href="@{logout}">Logout</a>
+          </div>
+        </div>
+
+        <div sec:authorize="!isAuthenticated()">
+            Hello, Unknown, Please <a th:href="@{/login}">Login</a>
+        </div>
+      </td>
+  </table>
+</div>
+
+</body>
+</html>

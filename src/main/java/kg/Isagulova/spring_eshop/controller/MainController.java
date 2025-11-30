@@ -27,13 +27,13 @@ public class MainController {
         model.addAttribute("loginError", true);
         return "login";
     }
-    @RequestMapping("/logout")
-    public String logout(HttpServletRequest request, HttpServletResponse response) {
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        if (auth != null) {
-            // Завершение сессии
-            new SecurityContextLogoutHandler().logout(request, response, auth);
-        }
-        return "/logout";
-    }
+//    @RequestMapping("/logout")
+//    public String logout(HttpServletRequest request, HttpServletResponse response) {
+//        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+//        if (auth != null) {
+//            // Завершение сессии
+//            new SecurityContextLogoutHandler().logout(request, response, auth);
+//        }
+//        return "/index";
+//    }
 }
