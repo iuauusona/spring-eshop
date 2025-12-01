@@ -1,5 +1,6 @@
 package kg.Isagulova.spring_eshop.service;
 
+import jakarta.transaction.Transactional;
 import kg.Isagulova.spring_eshop.dao.UserRepository;
 import kg.Isagulova.spring_eshop.domain.Role;
 import kg.Isagulova.spring_eshop.domain.User;
@@ -71,6 +72,32 @@ public class UserServiceImpl implements UserService {
                 user.getPassword(),
                 roles
         );
+    }
+
+    @Override
+    public User findByName(String name){
+        return userRepository.findByUsername(name);//findFirstByName
+    }
+
+    @Transactional
+    @Override
+    public void updateProfile(UserDTO dto){
+        User savedUser = userRepository.findByUsername(dto.getUsername());//findFirstByName
+        if (savedUser == null) {
+            throw new RuntimeException("User not found with username: " + dto.getUsername());
+        }
+        boolean isChanged = false;
+        if (dto.getPassword() != null && !dto.getPassword().isEmpty()){
+            savedUser.setPassword(passwordEncoder.encode(dto.getPassword()));
+            isChanged = true;
+        }
+        if(!Objects.equals(dto.getEmail(), savedUser.getEmail())) {
+            savedUser.setEmail(dto.getEmail());
+            isChanged = true;
+        }
+        if (isChanged) {
+            userRepository.save(savedUser);
+        }
     }
 
 }

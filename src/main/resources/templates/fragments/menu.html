@@ -22,10 +22,10 @@
       <td align="right">
         <div sec:authorize="isAuthenticated()">
           <div>
-            Hello, <span sec:authentication="principal.username">Bill</span>
+            Hello, <a th:href="@{/users/profile}"> <span sec:authentication="principal.username">Bill</span></a>
           </div>
           <div>
-            <a th:href="@{logout}">Logout</a>
+            <a th:href="@{/logout}">Logout</a>
           </div>
         </div>
 

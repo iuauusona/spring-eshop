@@ -1,5 +1,7 @@
 package kg.Isagulova.spring_eshop.service;
 
+import jakarta.transaction.Transactional;
+import kg.Isagulova.spring_eshop.domain.User;
 import kg.Isagulova.spring_eshop.dto.UserDTO;
 import org.springframework.security.core.userdetails.UserDetailsService;
 
@@ -9,4 +11,8 @@ public interface UserService extends UserDetailsService { //security
     boolean save (UserDTO userDTO);
     List<UserDTO> getAll();
 
+    User findByName(String name);
+
+    @Transactional
+    void updateProfile(UserDTO dto);
 }
