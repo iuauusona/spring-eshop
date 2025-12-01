@@ -2,10 +2,7 @@ package kg.Isagulova.spring_eshop.domain;
 
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 @Data
 @AllArgsConstructor
@@ -27,6 +24,7 @@ public class User {
     @Enumerated(EnumType.STRING)
     private Role role;
     @OneToOne(cascade = CascadeType.REMOVE)
+    @ToString.Exclude
     private Bucket bucket;
 
 }
