@@ -43,7 +43,13 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public void save(User user) {
+        userRepository.save(user);
+    }
+
+    @Override
     public List<UserDTO> getAll(){
+        System.out.println("in service impl : ------>>>" + userRepository.findAll());
         return userRepository.findAll().stream()
                 .map(this::toDTO)
                 .collect(Collectors.toList());
