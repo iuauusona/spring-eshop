@@ -23,8 +23,8 @@ public class User {
     private boolean archived;
     @Enumerated(EnumType.STRING)
     private Role role;
-    @OneToOne(cascade = CascadeType.REMOVE)
-    @ToString.Exclude
+    @OneToOne(mappedBy="user", cascade = CascadeType.REMOVE)
+//    @ToString.Exclude
     private Bucket bucket;
 
 }

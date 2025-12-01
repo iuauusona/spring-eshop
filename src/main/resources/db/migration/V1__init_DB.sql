@@ -104,7 +104,6 @@ CREATE TABLE products_category (
 
 CREATE TABLE users (
                        id BIGINT NOT NULL,
-                       bucket_id BIGINT UNIQUE,
                        email VARCHAR(255),
                        password VARCHAR(255),
                        phone VARCHAR(255),
@@ -144,7 +143,4 @@ ALTER TABLE products_category
 
 ALTER TABLE products_category
     ADD CONSTRAINT fk_pc_product FOREIGN KEY (product_id) REFERENCES products;
-
-ALTER TABLE users
-    ADD CONSTRAINT fk_users_bucket FOREIGN KEY (bucket_id) REFERENCES buckets;
 
