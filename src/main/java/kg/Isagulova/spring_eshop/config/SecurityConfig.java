@@ -14,7 +14,7 @@ import org.springframework.security.web.SecurityFilterChain;
 
 @Configuration
 @EnableWebSecurity
-@EnableGlobalMethodSecurity(securedEnabled  = true)
+@EnableGlobalMethodSecurity(securedEnabled  = true, prePostEnabled = true, jsr250Enabled = true)
 public class SecurityConfig {
     private final UserService userService;
     private final PasswordEncoderConfig passwordEncoder;
@@ -43,7 +43,7 @@ public class SecurityConfig {
                         .requestMatchers("/", "/login", "/auth", "/login-error").permitAll()
                         .requestMatchers("/users").hasRole("ADMIN")
                         .requestMatchers("/users").hasRole("MANAGER")
-                        .requestMatchers("/users/new").hasRole("ADMIN")
+//                        .requestMatchers("/users/new").hasRole("ADMIN")
                         .anyRequest().authenticated()
 
                 )
