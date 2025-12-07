@@ -10,4 +10,6 @@ public interface ProductsService {
 
     @Transactional
     void addToUserBucket(Long productId, String username);
+
+    void addProduct(ProductDTO dto);
 }

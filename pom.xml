@@ -108,6 +108,39 @@
             <artifactId>wsdl4j</artifactId>
         </dependency>
 
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-websocket</artifactId>
+        </dependency>
+
+        <!-- https://mvnrepository.com/artifact/org.webjars/sockjs-client -->
+        <dependency>
+            <groupId>org.webjars</groupId>
+            <artifactId>sockjs-client</artifactId>
+            <version>1.5.1</version>
+        </dependency>
+
+        <!-- https://mvnrepository.com/artifact/org.webjars/stomp-websocket -->
+        <dependency>
+            <groupId>org.webjars</groupId>
+            <artifactId>stomp-websocket</artifactId>
+            <version>2.3.4</version>
+        </dependency>
+
+        <!-- https://mvnrepository.com/artifact/org.webjars.bower/jquery -->
+        <dependency>
+            <groupId>org.webjars</groupId>
+            <artifactId>jquery</artifactId>
+            <version>3.7.1</version>
+        </dependency>
+
+        <!-- https://mvnrepository.com/artifact/org.webjars/webjars-locator -->
+        <dependency>
+            <groupId>org.webjars</groupId>
+            <artifactId>webjars-locator</artifactId>
+            <version>0.52</version>
+        </dependency>
+
 	</dependencies>
 
 	<build>

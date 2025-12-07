@@ -3,10 +3,58 @@
 <head>
   <meta charset="UTF-8">
   <title>Products List</title>
+    <!-- CDN для jQuery, SockJS и STOMP -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sockjs-client@1.6.1/dist/sockjs.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/stompjs@2.3.3/lib/stomp.min.js"></script>
+    <script>
+        var stomp = null;
+
+        // подключаемся к серверу по окончании загрузки страницы
+        window.onload = function() {
+            connect();
+        };
+
+        function connect() {
+            var socket = new SockJS('/socket');
+            stomp = Stomp.over(socket);
+            stomp.connect({}, function (frame) {
+                console.log('Connected: ' + frame);
+                stomp.subscribe('/topic/products', function (product) {
+                    renderItem(product);
+                });
+            });
+        }
+
+        // хук на интерфейс
+
+        $(function () {
+            $("form").on('submit', function (e) {
+                e.preventDefault();
+            });
+            $("#send").click(function() { sendContent(); });
+        });
+
+
+        // отправка сообщения на сервер
+        function sendContent() {
+             stomp.send("/app/products", {}, JSON.stringify({'title': $("#title").val(), 'price': $("#price").val()}));
+        }
+
+        // рендер сообщения, полученного от сервера
+        function renderItem(productJson) {
+            var product = JSON.parse(productJson.body);
+            $("#table").append("<tr>" +
+                "<td>" + product.title + "</td>" +
+                "<td>" + product.price + "</td>" +
+                "<td><a href='/products/' + product.id + '/bucket'>Add to bucket</a></td>" +
+                "</tr>");
+        }
+    </script>
 </head>
 <body>
 <div th:insert="fragments/menu :: nav-menu"></div>
-<table border="1" align="center">
+<table border="1" align="center" id="table">
   <tr>
     <td>Title</td>
     <td>Price</td>
@@ -18,5 +66,18 @@
     <td><a th:href="@{/products/{id}/bucket(id=${product.id})}">Add to bucket</a></td>
   </tr>
 </table>
+<form style="text-align: center">
+    <table align="center">
+        <tr>
+            <td>Title</td>
+            <td><input type="text" id="title"></td>
+        </tr>
+        <tr>
+            <td>Price</td>
+            <td><input type="number" id="price"></td>
+        </tr>
+    </table>
+    <button id="send" type="submit">Submit</button>
+</form>
 </body>
 </html>
