@@ -1,14 +1,13 @@
 package com.example.spring_eshop.service;
 
 
+import com.example.spring_eshop.domain.*;
 import jakarta.transaction.Transactional;
 import com.example.spring_eshop.dao.BucketRepository;
 import com.example.spring_eshop.dao.ProductRepository;
-import com.example.spring_eshop.domain.Bucket;
-import com.example.spring_eshop.domain.Product;
-import com.example.spring_eshop.domain.User;
 import com.example.spring_eshop.dto.BucketDTO;
 import com.example.spring_eshop.dto.BucketDetailDTO;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
@@ -23,11 +22,14 @@ public class BucketServiceImpl implements BucketService {
     private final BucketRepository bucketRepository;
     private final ProductRepository productRepository;
     private final UserService userService;
+    private final OrderService orderService;
 
-    public BucketServiceImpl(BucketRepository bucketRepository, ProductRepository productRepository, UserService userService) {
+    @Autowired
+    public BucketServiceImpl(BucketRepository bucketRepository, ProductRepository productRepository, UserService userService, OrderService orderService) {
         this.bucketRepository = bucketRepository;
         this.productRepository = productRepository;
         this.userService = userService;
+        this.orderService = orderService;
     }
 
     @Override
@@ -72,14 +74,50 @@ public class BucketServiceImpl implements BucketService {
             if (detail == null) {
                 mapByProductId.put(product.getId(), new BucketDetailDTO(product));
             } else {
-                detail.setAmount(detail.getAmount().add(new BigDecimal(1.0)));
-                detail.setSum(detail.getSum() + Double.valueOf(product.getPrice().toString()));
+                detail.setAmount(detail.getAmount() + 1.0);
+                detail.setSum(detail.getSum() + product.getPrice());
             }
         }
         bucketDTO.setBucketDetails(new ArrayList<>(mapByProductId.values()));
         bucketDTO.aggregate();
 
         return bucketDTO;
+    }
+
+    @Override
+    @Transactional
+    public void commitBucketToOrder(String name) {
+        User user = userService.findByName(name);
+        if(user == null){
+            throw new RuntimeException("User is not found");
+        }
+        Bucket bucket = user.getBucket();
+        if(bucket == null || bucket.getProducts().isEmpty()){
+            return;
+        }
+
+        Order order = new Order();
+        order.setStatus(OrderStatus.NEW);
+        order.setUser(user);
+
+        Map<Product, Long> productWithAmount = bucket.getProducts().stream()
+                .collect(Collectors.groupingBy(product -> product, Collectors.counting()));
+
+        List<OrderDetails> orderDetails = productWithAmount.entrySet().stream()
+                .map(pair -> new OrderDetails(order, pair.getKey(), pair.getValue()))
+                .collect(Collectors.toList());
+
+        BigDecimal total = new BigDecimal(orderDetails.stream()
+                .map(detail -> detail.getPrice().multiply(detail.getAmount()))
+                .mapToDouble(BigDecimal::doubleValue).sum());
+
+        order.setDetails(orderDetails);
+        order.setSum(total);
+        order.setAddress("none");
+
+        orderService.saveOrder(order);
+        bucket.getProducts().clear();
+        bucketRepository.save(bucket);
     }
 
 

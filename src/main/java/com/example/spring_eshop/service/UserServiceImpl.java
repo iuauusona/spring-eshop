@@ -33,7 +33,7 @@ public class UserServiceImpl implements UserService {
             throw new RuntimeException("Passwords don't match");
         }
         User user = User.builder()
-                .username(userDTO.getUsername())
+                .name(userDTO.getUsername())
                 .password(passwordEncoder.encode(userDTO.getPassword()))
                 .email(userDTO.getEmail())
                 .role(Role.CLIENT)
@@ -57,14 +57,14 @@ public class UserServiceImpl implements UserService {
 
     private UserDTO toDTO(User user) {
         return UserDTO.builder()
-                .username(user.getUsername())
+                .username(user.getName())
                 .email(user.getEmail())
                 .build();
     }
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        User user = userRepository.findByUsername(username);
+        User user = userRepository.findByName(username);
         if (user == null) {
             throw new UsernameNotFoundException("User not found with username: " + username);
         }
@@ -73,7 +73,7 @@ public class UserServiceImpl implements UserService {
         roles.add(new SimpleGrantedAuthority("ROLE_" + user.getRole().name()));
 
         return new org.springframework.security.core.userdetails.User(
-                user.getUsername(),
+                user.getName(),
                 user.getPassword(),
                 roles
         );
@@ -81,13 +81,13 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User findByName(String name) {
-        return userRepository.findByUsername(name);//findFirstByName
+        return userRepository.findByName(name);//findFirstByName
     }
 
     @Transactional
     @Override
     public void updateProfile(UserDTO dto) {
-        User savedUser = userRepository.findByUsername(dto.getUsername());//findFirstByName
+        User savedUser = userRepository.findByName(dto.getUsername());//findFirstByName
         if (savedUser == null) {
             throw new RuntimeException("User not found with username: " + dto.getUsername());
         }

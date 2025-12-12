@@ -50,7 +50,7 @@ public class UserController {
         User user = userService.findByName(principal.getName());
 
         UserDTO userDTO = UserDTO.builder()
-                .username(user.getUsername())
+                .username(user.getName())
                 .email(user.getEmail())
                 .build();
         model.addAttribute("user", userDTO);

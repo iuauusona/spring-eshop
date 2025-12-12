@@ -1,4 +1,4 @@
-INSERT INTO users (id, archived, email, username, password, role)
-VALUES (1, false,'mail@gmail.com', 'admin', 'pass', 'ADMIN');
+INSERT INTO users (id, archived, email, name, password, role)
+VALUES (1, false, 'mail@mail.ru', 'admin', '$2a$10$QRWAbXveneW1d.EKZPnxV.D7hjqPfw9Ex4nJuJpLgiFCDFopflogC', 'ADMIN');
 
 ALTER SEQUENCE users_seq RESTART WITH 2;

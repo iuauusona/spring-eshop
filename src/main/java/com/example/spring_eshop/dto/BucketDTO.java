@@ -14,8 +14,8 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 public class BucketDTO {
-    private int amountProducts;
-    private Double sum;
+    private long amountProducts;
+    private double sum;
     private List<BucketDetailDTO> bucketDetails = new ArrayList<>();
 
     public void aggregate() {

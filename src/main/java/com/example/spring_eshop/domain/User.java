@@ -16,10 +16,9 @@ public class User {
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = SEQ_NAME)
     @SequenceGenerator(name = SEQ_NAME, sequenceName = SEQ_NAME, allocationSize = 1)
     private Long id;
-    private String username;
+    private String name;
     private String email;
     private String password;
-    private String phone;
     private boolean archived;
     @Enumerated(EnumType.STRING)
     private Role role;
