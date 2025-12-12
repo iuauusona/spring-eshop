@@ -14,7 +14,7 @@ public class User {
     private static final String SEQ_NAME = "users_seq";
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = SEQ_NAME)
-    @SequenceGenerator(name= SEQ_NAME, sequenceName = SEQ_NAME, allocationSize = 1)
+    @SequenceGenerator(name = SEQ_NAME, sequenceName = SEQ_NAME, allocationSize = 1)
     private Long id;
     private String username;
     private String email;
@@ -23,7 +23,7 @@ public class User {
     private boolean archived;
     @Enumerated(EnumType.STRING)
     private Role role;
-    @OneToOne(mappedBy="user", cascade = CascadeType.REMOVE)
+    @OneToOne(mappedBy = "user", cascade = CascadeType.REMOVE)
 //    @ToString.Exclude
     private Bucket bucket;
 

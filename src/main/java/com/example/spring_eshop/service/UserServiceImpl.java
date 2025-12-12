@@ -28,8 +28,8 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public boolean save(UserDTO userDTO){
-        if(!Objects.equals(userDTO.getPassword(), userDTO.getMatchingPassword())) {
+    public boolean save(UserDTO userDTO) {
+        if (!Objects.equals(userDTO.getPassword(), userDTO.getMatchingPassword())) {
             throw new RuntimeException("Passwords don't match");
         }
         User user = User.builder()
@@ -48,8 +48,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public List<UserDTO> getAll(){
-        System.out.println("in service impl : ------>>>" + userRepository.findAll());
+    public List<UserDTO> getAll() {
         return userRepository.findAll().stream()
                 .map(this::toDTO)
                 .collect(Collectors.toList());
@@ -81,23 +80,23 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User findByName(String name){
+    public User findByName(String name) {
         return userRepository.findByUsername(name);//findFirstByName
     }
 
     @Transactional
     @Override
-    public void updateProfile(UserDTO dto){
+    public void updateProfile(UserDTO dto) {
         User savedUser = userRepository.findByUsername(dto.getUsername());//findFirstByName
         if (savedUser == null) {
             throw new RuntimeException("User not found with username: " + dto.getUsername());
         }
         boolean isChanged = false;
-        if (dto.getPassword() != null && !dto.getPassword().isEmpty()){
+        if (dto.getPassword() != null && !dto.getPassword().isEmpty()) {
             savedUser.setPassword(passwordEncoder.encode(dto.getPassword()));
             isChanged = true;
         }
-        if(!Objects.equals(dto.getEmail(), savedUser.getEmail())) {
+        if (!Objects.equals(dto.getEmail(), savedUser.getEmail())) {
             savedUser.setEmail(dto.getEmail());
             isChanged = true;
         }

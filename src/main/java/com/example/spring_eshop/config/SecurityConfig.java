@@ -12,7 +12,7 @@ import org.springframework.security.web.SecurityFilterChain;
 
 @Configuration
 @EnableWebSecurity
-@EnableGlobalMethodSecurity(securedEnabled  = true, prePostEnabled = true, jsr250Enabled = true)
+@EnableGlobalMethodSecurity(securedEnabled = true, prePostEnabled = true, jsr250Enabled = true)
 public class SecurityConfig {
     private final UserService userService;
     private final PasswordEncoderConfig passwordEncoder;
@@ -39,11 +39,11 @@ public class SecurityConfig {
                 .authenticationProvider(provider)
                 .authorizeHttpRequests(auth -> auth
                                 .requestMatchers("/ws").permitAll()
-                        .requestMatchers("/", "/login", "/auth", "/login-error").permitAll()
-                        .requestMatchers("/users").hasRole("ADMIN")
-                        .requestMatchers("/users").hasRole("MANAGER")
+                                .requestMatchers("/", "/login", "/auth", "/login-error").permitAll()
+                                .requestMatchers("/users").hasRole("ADMIN")
+                                .requestMatchers("/users").hasRole("MANAGER")
 //                        .requestMatchers("/users/new").hasRole("ADMIN")
-                        .anyRequest().authenticated()
+                                .anyRequest().authenticated()
 
                 )
                 .formLogin(login -> login

@@ -15,7 +15,7 @@ import javax.xml.datatype.DatatypeConfigurationException;
 @Endpoint
 public class GreetingEndpoint {
 
-    public static final String NAMESPACE_GREETING= "http://example.com/spring_eshop/ws/greeting";
+    public static final String NAMESPACE_GREETING = "http://example.com/spring_eshop/ws/greeting";
     private final GreetingService greetingService;
 
     @Autowired

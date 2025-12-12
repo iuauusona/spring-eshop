@@ -15,10 +15,10 @@ import java.math.BigDecimal;
 @Builder
 public class BucketDetailDTO {
     private String title;
-    private Long id;
+    private long id;
     private BigDecimal price;
     private BigDecimal amount;
-    private Double sum;
+    private double sum;
 
     public BucketDetailDTO(Product product) {
         this.title = product.getTitle();

@@ -18,25 +18,23 @@ public class MainController {
     }
 
     @RequestMapping({"", "/"})
-    public String index(Model model, HttpSession httpSession){
+    public String index(Model model, HttpSession httpSession) {
         model.addAttribute("amountClicks", sessionObjectHolder.getAmountClicks());
-        System.out.println("My ID ----------" + httpSession.getAttribute("myID"));
         if (httpSession.getAttribute("myID") == null) {
             String uuid = UUID.randomUUID().toString();
             httpSession.setAttribute("myID", uuid);
-            System.out.println("Generated UUID -> " + uuid);
         }
-        model.addAttribute("uuid",  httpSession.getAttribute("myID"));
+        model.addAttribute("uuid", httpSession.getAttribute("myID"));
         return "index";
     }
 
     @RequestMapping("/login")
-    public String login(){
+    public String login() {
         return "login";
     }
 
     @RequestMapping("/login-error")
-    public String loginError(Model model){
+    public String loginError(Model model) {
         model.addAttribute("loginError", true);
         return "login";
     }

@@ -21,7 +21,10 @@ public class ProductServiceImpl implements ProductsService {
     private final BucketService bucketService;
     private SimpMessagingTemplate template;
 
-    public ProductServiceImpl(ProductRepository productRepository, UserService userService, BucketService bucketService, SimpMessagingTemplate template) {
+    public ProductServiceImpl(ProductRepository productRepository,
+                              UserService userService,
+                              BucketService bucketService,
+                              SimpMessagingTemplate template) {
         this.productRepository = productRepository;
         this.userService = userService;
         this.bucketService = bucketService;
@@ -29,7 +32,7 @@ public class ProductServiceImpl implements ProductsService {
     }
 
     @Override
-    public List<ProductDTO> getAll(){
+    public List<ProductDTO> getAll() {
         return mapper.fromProductList(productRepository.findAll());
     }
 
@@ -45,7 +48,7 @@ public class ProductServiceImpl implements ProductsService {
             Bucket newBucket = bucketService.createBucket(user, Collections.singletonList(productId));
             user.setBucket(newBucket);
             userService.save(user);
-        }else{
+        } else {
             bucketService.addProducts(bucket, Collections.singletonList(productId));
         }
     }

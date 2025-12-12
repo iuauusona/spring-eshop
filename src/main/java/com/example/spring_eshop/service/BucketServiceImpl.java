@@ -23,6 +23,7 @@ public class BucketServiceImpl implements BucketService {
     private final BucketRepository bucketRepository;
     private final ProductRepository productRepository;
     private final UserService userService;
+
     public BucketServiceImpl(BucketRepository bucketRepository, ProductRepository productRepository, UserService userService) {
         this.bucketRepository = bucketRepository;
         this.productRepository = productRepository;
@@ -63,7 +64,7 @@ public class BucketServiceImpl implements BucketService {
         }
 
         BucketDTO bucketDTO = new BucketDTO();
-        Map<Long, BucketDetailDTO>  mapByProductId = new HashMap<>();
+        Map<Long, BucketDetailDTO> mapByProductId = new HashMap<>();
 
         List<Product> products = user.getBucket().getProducts();
         for (Product product : products) {

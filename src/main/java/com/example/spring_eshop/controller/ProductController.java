@@ -28,7 +28,7 @@ public class ProductController {
     }
 
     @GetMapping
-    public String list(Model model){
+    public String list(Model model) {
         sessionObjectHolder.addClick();
         List<ProductDTO> list = productService.getAll();
         model.addAttribute("products", list);
@@ -36,7 +36,7 @@ public class ProductController {
     }
 
     @GetMapping("/{id}/bucket")
-    public String addBucket(@PathVariable Long id, Principal principal){
+    public String addBucket(@PathVariable Long id, Principal principal) {
         sessionObjectHolder.addClick();
         if (principal == null) {
             return "redirect:/products";
@@ -46,13 +46,13 @@ public class ProductController {
     }
 
     @PostMapping
-    public ResponseEntity<Void> addProduct(ProductDTO dto){
+    public ResponseEntity<Void> addProduct(ProductDTO dto) {
         productService.addProduct(dto);
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
     @MessageMapping("/products")
-    public void messageAddProduct(ProductDTO dto){
+    public void messageAddProduct(ProductDTO dto) {
         productService.addProduct(dto);
     }
 }

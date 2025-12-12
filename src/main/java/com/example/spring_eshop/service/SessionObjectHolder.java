@@ -10,12 +10,15 @@ import org.springframework.web.context.WebApplicationContext;
 @Scope(value = WebApplicationContext.SCOPE_SESSION, proxyMode = ScopedProxyMode.TARGET_CLASS)
 public class SessionObjectHolder {
     private long amountClicks = 0;
+
     public SessionObjectHolder() {
-        System.out.println("Session Object created.");
+        System.out.println("Session Object created!");
     }
+
     public long getAmountClicks() {
         return amountClicks;
     }
+
     public void addClick() {
         amountClicks++;
     }

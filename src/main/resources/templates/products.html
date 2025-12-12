@@ -1,8 +1,8 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml" xmlns:sec="http://www.w3.org/1999/xhtml" >
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml" xmlns:sec="http://www.w3.org/1999/xhtml">
 <head>
-  <meta charset="UTF-8">
-  <title>Products List</title>
+    <meta charset="UTF-8">
+    <title>Products List</title>
     <!-- CDN для jQuery, SockJS и STOMP -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sockjs-client@1.6.1/dist/sockjs.min.js"></script>
@@ -11,7 +11,7 @@
         var stomp = null;
 
         // подключаемся к серверу по окончании загрузки страницы
-        window.onload = function() {
+        window.onload = function () {
             connect();
         };
 
@@ -32,13 +32,15 @@
             $("form").on('submit', function (e) {
                 e.preventDefault();
             });
-            $("#send").click(function() { sendContent(); });
+            $("#send").click(function () {
+                sendContent();
+            });
         });
 
 
         // отправка сообщения на сервер
         function sendContent() {
-             stomp.send("/app/products", {}, JSON.stringify({'title': $("#title").val(), 'price': $("#price").val()}));
+            stomp.send("/app/products", {}, JSON.stringify({'title': $("#title").val(), 'price': $("#price").val()}));
         }
 
         // рендер сообщения, полученного от сервера
@@ -55,16 +57,16 @@
 <body>
 <div th:insert="fragments/menu :: nav-menu"></div>
 <table border="1" align="center" id="table">
-  <tr>
-    <td>Title</td>
-    <td>Price</td>
-    <td></td>
-  </tr>
-  <tr th:each="product : ${products}">
-    <td th:text="${product.title}">Cheese</td>
-    <td th:text="${product.price}">12.0</td>
-    <td><a th:href="@{/products/{id}/bucket(id=${product.id})}">Add to bucket</a></td>
-  </tr>
+    <tr>
+        <td>Title</td>
+        <td>Price</td>
+        <td></td>
+    </tr>
+    <tr th:each="product : ${products}">
+        <td th:text="${product.title}">Cheese</td>
+        <td th:text="${product.price}">12.0</td>
+        <td><a th:href="@{/products/{id}/bucket(id=${product.id})}">Add to bucket</a></td>
+    </tr>
 </table>
 <form style="text-align: center">
     <table align="center">

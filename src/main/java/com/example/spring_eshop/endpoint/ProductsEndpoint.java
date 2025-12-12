@@ -12,9 +12,11 @@ import org.springframework.ws.server.endpoint.annotation.PayloadRoot;
 import org.springframework.ws.server.endpoint.annotation.RequestPayload;
 import org.springframework.ws.server.endpoint.annotation.ResponsePayload;
 
+import javax.xml.datatype.DatatypeConfigurationException;
+
 @Endpoint
 public class ProductsEndpoint {
-    public static final String NAMESPACE_PRODUCTS= "http://example.com/spring_eshop/ws/products";
+    public static final String NAMESPACE_PRODUCTS = "http://example.com/spring_eshop/ws/products";
     private final ProductsService productsService;
 
     @Autowired
@@ -25,7 +27,7 @@ public class ProductsEndpoint {
     // как RequestMapping
     @PayloadRoot(namespace = NAMESPACE_PRODUCTS, localPart = "getProductsRequest")
     @ResponsePayload // полезная нагрузка
-    public GetProductsResponse getProductsWS(@RequestPayload GetProductsRequest request) {
+    public GetProductsResponse getProductsWS(@RequestPayload GetProductsRequest request) throws DatatypeConfigurationException {
         GetProductsResponse response = new GetProductsResponse();
         productsService.getAll()
                 .forEach(dto -> response.getProducts().add(createProductsWS(dto)));
