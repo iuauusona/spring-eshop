@@ -11,7 +11,7 @@ import java.util.GregorianCalendar;
 public class GreetingService {
     public Greeting generateGreeting(String name) throws DatatypeConfigurationException {
         Greeting greeting = new Greeting();
-        greeting.setText("Hello " + name);
+        greeting.setText("Hello, " + name);
         greeting.setDate(DatatypeFactory.newInstance()
                 .newXMLGregorianCalendar(new GregorianCalendar()));
         return greeting;
