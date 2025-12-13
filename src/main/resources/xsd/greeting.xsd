@@ -1,6 +1,6 @@
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
-           xmlns:tns="http://example.com/spring_eshop/ws/greeting"
-           targetNamespace="http://example.com/spring_eshop/ws/greeting"
+           xmlns:tns="http://isagulova.com/spring_eshop/ws/greeting"
+           targetNamespace="http://isagulova.com/spring_eshop/ws/greeting"
            elementFormDefault="qualified">
     <xs:element name="getGreetingRequest">
         <xs:complexType>
