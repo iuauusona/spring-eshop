@@ -88,4 +88,11 @@ public class UserController {
             return "user";
         }
     }
+
+    @GetMapping("/activate/{code}")
+    private String activateUser(Model model, @PathVariable("code") String activateCode){
+        boolean activated = userService.activateUser(activateCode);
+        model.addAttribute("activated", activated);
+        return "active-user";
+    }
 }

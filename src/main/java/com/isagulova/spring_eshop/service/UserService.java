@@ -18,4 +18,6 @@ public interface UserService extends UserDetailsService { //security
 
     @Transactional
     void updateProfile(UserDTO dto);
+
+    boolean activateUser(String activateCode);
 }

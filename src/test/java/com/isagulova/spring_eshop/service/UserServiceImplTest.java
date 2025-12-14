@@ -15,6 +15,7 @@ class UserServiceImplTest {
     private UserServiceImpl userService;
     private PasswordEncoder passwordEncoder;
     private UserRepository userRepository;
+    private MailSenderService mailSenderService;
 
     @BeforeAll
     static void beforeAll() {
@@ -26,8 +27,8 @@ class UserServiceImplTest {
         System.out.println("Before each test");
         passwordEncoder = Mockito.mock(PasswordEncoder.class);
         userRepository = Mockito.mock(UserRepository.class);
-
-        userService = new UserServiceImpl(userRepository, passwordEncoder);
+        mailSenderService = Mockito.mock(MailSenderService.class);
+        userService = new UserServiceImpl(userRepository, passwordEncoder,  mailSenderService);
     }
 
     @AfterEach

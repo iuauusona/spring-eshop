@@ -23,7 +23,8 @@ public class User {
     @Enumerated(EnumType.STRING)
     private Role role;
     @OneToOne(mappedBy = "user", cascade = CascadeType.REMOVE)
-//    @ToString.Exclude
     private Bucket bucket;
+    @Column(name = "activate_code")
+    private String activeCode;
 
 }

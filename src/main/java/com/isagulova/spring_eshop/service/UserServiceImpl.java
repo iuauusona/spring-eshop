@@ -15,16 +15,20 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Service
 public class UserServiceImpl implements UserService {
+
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
+    private final MailSenderService mailSenderService;
 
-    public UserServiceImpl(UserRepository userRepository, PasswordEncoder passwordEncoder) {
+    public UserServiceImpl(UserRepository userRepository, PasswordEncoder passwordEncoder, MailSenderService mailSenderService) {
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
+        this.mailSenderService = mailSenderService;
     }
 
     @Override
@@ -37,8 +41,10 @@ public class UserServiceImpl implements UserService {
                 .password(passwordEncoder.encode(userDTO.getPassword()))
                 .email(userDTO.getEmail())
                 .role(Role.CLIENT)
+                .activeCode(UUID.randomUUID().toString())
                 .build();
         userRepository.save(user);
+        mailSenderService.sendActivateCode(user);
         return true;
     }
 
@@ -104,5 +110,18 @@ public class UserServiceImpl implements UserService {
             userRepository.save(savedUser);
         }
     }
+
+    @Override
+    public boolean activateUser(String activateCode) {
+        User user = userRepository.findByActiveCode(activateCode);
+        if (user == null) {
+            return false;
+        }
+
+        user.setActiveCode(null); // или active=true
+        userRepository.save(user);
+        return true;
+    }
+
 
 }
