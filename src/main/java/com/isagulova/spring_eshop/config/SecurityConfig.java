@@ -42,7 +42,7 @@ public class SecurityConfig {
                                 .requestMatchers("/", "/login", "/auth", "/login-error").permitAll()
                                 .requestMatchers("/users").hasRole("ADMIN")
                                 .requestMatchers("/users").hasRole("MANAGER")
-//                        .requestMatchers("/users/new").hasRole("ADMIN")
+//                              .requestMatchers("/users/new").hasRole("ADMIN")
                                 .anyRequest().authenticated()
 
                 )
