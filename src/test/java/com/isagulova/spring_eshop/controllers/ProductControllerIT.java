@@ -1,4 +1,4 @@
-package com.isagulova.spring_eshop;
+package com.isagulova.spring_eshop.controllers;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
