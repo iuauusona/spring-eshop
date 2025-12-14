@@ -4,6 +4,7 @@ package com.isagulova.spring_eshop.controller;
 import com.isagulova.spring_eshop.domain.User;
 import com.isagulova.spring_eshop.dto.UserDTO;
 import com.isagulova.spring_eshop.service.UserService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PostAuthorize;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
@@ -16,6 +17,7 @@ import java.util.Objects;
 @Controller
 @RequestMapping("users")
 public class UserController {
+
     private final UserService userService;
 
     public UserController(UserService userService) {
@@ -51,6 +53,7 @@ public class UserController {
         UserDTO userDTO = UserDTO.builder()
                 .username(user.getName())
                 .email(user.getEmail())
+                .activated(user.getActiveCode() == null)
                 .build();
         model.addAttribute("user", userDTO);
         return "profile";
@@ -90,7 +93,7 @@ public class UserController {
     }
 
     @GetMapping("/activate/{code}")
-    private String activateUser(Model model, @PathVariable("code") String activateCode){
+    public String activateUser(Model model, @PathVariable("code") String activateCode){
         boolean activated = userService.activateUser(activateCode);
         model.addAttribute("activated", activated);
         return "active-user";
