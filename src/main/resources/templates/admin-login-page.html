@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <!-- Admin Login Page -->
+    <div id="admin-login" class="page">
+        <div class="auth-container">
+            <div class="auth-header">
+                <h1>🔐 Admin Access</h1>
+                <p>Authorized personnel only</p>
+            </div>
+            <form>
+                <div class="form-group">
+                    <label>Admin Email</label>
+                    <input type="email" class="form-input" placeholder="admin@freshmart.com" required>
+                </div>
+                <div class="form-group">
+                    <label>Password</label>
+                    <input type="password" class="form-input" placeholder="••••••••" required>
+                </div>
+                <button type="submit" class="btn btn-primary" style="width: 100%;" onclick="event.preventDefault(); showPage('admin-dashboard')">Sign In</button>
+            </form>
+            <div class="security-badge" style="margin-top: 2rem;">
+                🔒 Protected by enterprise-grade security
+            </div>
+        </div>
+    </div>
+</body>
+</html>

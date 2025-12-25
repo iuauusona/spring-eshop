@@ -3,9 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>FreshMart - Online Grocery Store</title>
-    <!-- <link rel="stylesheet" href="/css/styles.css"> -->
-<!--    <script src="/js/script.js"></script>-->
+    <title>Document</title>
     <style>
         * {
             margin: 0;
@@ -1199,125 +1197,53 @@
         </div>
     </div>
 </header>
-    <!-- Home Page -->
-    <div id="home" class="page active">
+    <!-- Orders Page -->
+    <div id="orders" class="page">
         <div class="container">
-            <!-- Hero Section -->
-            <div class="hero">
-                <h1>Fresh Groceries Delivered to Your Door</h1>
-                <p>Get the freshest produce, dairy, and more with free delivery on orders over $50</p>
-                <button class="btn">Shop Now →</button>
-            </div>
-
-            <!-- Categories -->
-            <h2 class="section-title">Shop by Category</h2>
-            <div class="categories-grid">
-                <div class="category-card">
-                    <div class="category-icon">🥬</div>
-                    <h3>Fresh Produce</h3>
-                    <p>Fruits & Vegetables</p>
-                </div>
-                <div class="category-card">
-                    <div class="category-icon">🥛</div>
-                    <h3>Dairy</h3>
-                    <p>Milk, Cheese & Eggs</p>
-                </div>
-                <div class="category-card">
-                    <div class="category-icon">🍞</div>
-                    <h3>Bakery</h3>
-                    <p>Fresh Bread & Pastries</p>
-                </div>
-                <div class="category-card">
-                    <div class="category-icon">🥩</div>
-                    <h3>Meat & Fish</h3>
-                    <p>Fresh & Frozen</p>
-                </div>
-                <div class="category-card">
-                    <div class="category-icon">🍝</div>
-                    <h3>Pantry</h3>
-                    <p>Pasta, Rice & Cans</p>
-                </div>
-                <div class="category-card">
-                    <div class="category-icon">🥤</div>
-                    <h3>Beverages</h3>
-                    <p>Drinks & Juices</p>
-                </div>
-            </div>
-
-            <!-- Featured Products -->
-            <h2 class="section-title">Featured Products</h2>
-            <div class="products-grid">
-                <div class="product-card" onclick="showPage('product-detail')">
-                    <div class="product-image" style="background: linear-gradient(135deg, #ffd89b 0%, #19547b 100%);"></div>
-                    <div class="product-info">
-                        <h3 class="product-name">Organic Bananas</h3>
-                        <div class="product-rating">
-                            ⭐⭐⭐⭐⭐ <span style="color: var(--gray);">(124)</span>
-                        </div>
-                        <div class="product-price">$2.99</div>
-                        <button class="add-to-cart" onclick="event.stopPropagation(); addToCart()">Add to Cart</button>
-                    </div>
-                </div>
-                <div class="product-card">
-                    <div class="product-image" style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);"></div>
-                    <div class="product-info">
-                        <h3 class="product-name">Fresh Strawberries</h3>
-                        <div class="product-rating">
-                            ⭐⭐⭐⭐⭐ <span style="color: var(--gray);">(89)</span>
-                        </div>
-                        <div class="product-price">$4.99</div>
-                        <button class="add-to-cart" onclick="addToCart()">Add to Cart</button>
-                    </div>
-                </div>
-                <div class="product-card">
-                    <div class="product-image" style="background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);"></div>
-                    <div class="product-info">
-                        <h3 class="product-name">Organic Milk</h3>
-                        <div class="product-rating">
-                            ⭐⭐⭐⭐⭐ <span style="color: var(--gray);">(201)</span>
-                        </div>
-                        <div class="product-price">$5.49</div>
-                        <button class="add-to-cart" onclick="addToCart()">Add to Cart</button>
-                    </div>
-                </div>
-                <div class="product-card">
-                    <div class="product-image" style="background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);"></div>
-                    <div class="product-info">
-                        <h3 class="product-name">Whole Wheat Bread</h3>
-                        <div class="product-rating">
-                            ⭐⭐⭐⭐ <span style="color: var(--gray);">(156)</span>
-                        </div>
-                        <div class="product-price">$3.49</div>
-                        <button class="add-to-cart" onclick="addToCart()">Add to Cart</button>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Benefits -->
-            <div class="benefits">
-                <div class="benefit-item">
-                    <div class="benefit-icon">🚚</div>
-                    <h3>Free Shipping</h3>
-                    <p>On orders over $50</p>
-                </div>
-                <div class="benefit-item">
-                    <div class="benefit-icon">🔒</div>
-                    <h3>Secure Payment</h3>
-                    <p>100% secure transactions</p>
-                </div>
-                <div class="benefit-item">
-                    <div class="benefit-icon">↩️</div>
-                    <h3>Easy Returns</h3>
-                    <p>30-day return policy</p>
-                </div>
-                <div class="benefit-item">
-                    <div class="benefit-icon">⏰</div>
-                    <h3>24/7 Support</h3>
-                    <p>Dedicated customer service</p>
-                </div>
+            <h1 style="margin-bottom: 2rem;">Order History</h1>
+            <div class="data-table">
+                <table class="orders-table">
+                    <thead>
+                        <tr>
+                            <th>Order ID</th>
+                            <th>Date</th>
+                            <th>Items</th>
+                            <th>Total</th>
+                            <th>Status</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>#ORD-2024-001</strong></td>
+                            <td>Dec 20, 2024</td>
+                            <td>3 items</td>
+                            <td><strong>$16.16</strong></td>
+                            <td><span class="status-badge status-completed">Delivered</span></td>
+                            <td><button class="btn btn-primary" style="padding: 0.5rem 1rem; font-size: 0.9rem;">View Details</button></td>
+                        </tr>
+                        <tr>
+                            <td><strong>#ORD-2024-002</strong></td>
+                            <td>Dec 18, 2024</td>
+                            <td>5 items</td>
+                            <td><strong>$32.45</strong></td>
+                            <td><span class="status-badge status-pending">Processing</span></td>
+                            <td><button class="btn btn-primary" style="padding: 0.5rem 1rem; font-size: 0.9rem;">View Details</button></td>
+                        </tr>
+                        <tr>
+                            <td><strong>#ORD-2024-003</strong></td>
+                            <td>Dec 15, 2024</td>
+                            <td>2 items</td>
+                            <td><strong>$24.99</strong></td>
+                            <td><span class="status-badge status-completed">Delivered</span></td>
+                            <td><button class="btn btn-primary" style="padding: 0.5rem 1rem; font-size: 0.9rem;">View Details</button></td>
+                        </tr>
+                    </tbody>
+                </table>
             </div>
         </div>
     </div>
+</body>
 <!-- Footer -->
 <footer class="footer">
     <div class="footer-content">
@@ -1436,4 +1362,4 @@
     }
 
 </script>
-</body>
+</html>

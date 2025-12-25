@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <!-- Admin Users Page -->
+    <div id="admin-users" class="page">
+        <div class="admin-layout">
+            <aside class="admin-sidebar">
+                <div style="padding: 0 2rem; margin-bottom: 2rem;">
+                    <h2 style="color: var(--primary);">🛒 FreshMart</h2>
+                    <p style="color: rgba(255,255,255,0.7); font-size: 0.9rem;">Admin Panel</p>
+                </div>
+                <ul class="admin-menu">
+                    <li onclick="showPage('admin-dashboard')">📊 Dashboard</li>
+                    <li onclick="showPage('admin-products')">📦 Products</li>
+                    <li onclick="showPage('admin-orders')">🛍️ Orders</li>
+                    <li class="active">👥 Users</li>
+                    <li>🏷️ Categories</li>
+                    <li onclick="showPage('home')" style="color: var(--danger); margin-top: 2rem;">🚪 Logout</li>
+                </ul>
+            </aside>
+
+            <div class="admin-content">
+                <div class="data-table">
+                    <div class="table-header">
+                        <h1>Users Management</h1>
+                        <button class="btn btn-primary">+ Add User</button>
+                    </div>
+                    <div style="margin: 1.5rem 0;">
+                        <input type="text" class="form-input" placeholder="Search users..." style="max-width: 400px;">
+                    </div>
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Email</th>
+                                <th>Role</th>
+                                <th>Orders</th>
+                                <th>Total Spent</th>
+                                <th>Status</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>John Doe</strong></td>
+                                <td>john.doe@email.com</td>
+                                <td><span class="status-badge status-completed">Customer</span></td>
+                                <td>12 orders</td>
+                                <td><strong>$345.67</strong></td>
+                                <td><span class="status-badge status-completed">Active</span></td>
+                                <td>
+                                    <div class="table-actions">
+                                        <button class="action-btn edit-btn">Edit</button>
+                                        <button class="action-btn delete-btn">Block</button>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><strong>Jane Smith</strong></td>
+                                <td>jane.smith@email.com</td>
+                                <td><span class="status-badge status-completed">Customer</span></td>
+                                <td>8 orders</td>
+                                <td><strong>$198.45</strong></td>
+                                <td><span class="status-badge status-completed">Active</span></td>
+                                <td>
+                                    <div class="table-actions">
+                                        <button class="action-btn edit-btn">Edit</button>
+                                        <button class="action-btn delete-btn">Block</button>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><strong>Admin User</strong></td>
+                                <td>admin@freshmart.com</td>
+                                <td><span class="status-badge status-secondary" style="background: rgba(99, 102, 241, 0.1); color: var(--secondary);">Admin</span></td>
+                                <td>-</td>
+                                <td>-</td>
+                                <td><span class="status-badge status-completed">Active</span></td>
+                                <td>
+                                    <div class="table-actions">
+                                        <button class="action-btn edit-btn">Edit</button>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

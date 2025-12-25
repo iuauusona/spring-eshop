@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <!-- Admin Dashboard -->
+    <div id="admin-dashboard" class="page">
+        <div class="admin-layout">
+            <aside class="admin-sidebar">
+                <div style="padding: 0 2rem; margin-bottom: 2rem;">
+                    <h2 style="color: var(--primary);">🛒 FreshMart</h2>
+                    <p style="color: rgba(255,255,255,0.7); font-size: 0.9rem;">Admin Panel</p>
+                </div>
+                <ul class="admin-menu">
+                    <li class="active" onclick="switchAdminTab('dashboard')">📊 Dashboard</li>
+                    <li onclick="switchAdminTab('products'); showPage('admin-products')">📦 Products</li>
+                    <li onclick="switchAdminTab('admin-orders'); showPage('admin-orders')">🛍️ Orders</li>
+                    <li onclick="switchAdminTab('users'); showPage('admin-users')">👥 Users</li>
+                    <li onclick="switchAdminTab('categories')">🏷️ Categories</li>
+                    <li onclick="showPage('home')" style="color: var(--danger); margin-top: 2rem;">🚪 Logout</li>
+                </ul>
+            </aside>
+
+            <div class="admin-content">
+                <h1 style="margin-bottom: 2rem;">Dashboard Overview</h1>
+                
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-value">$12,458</div>
+                        <div class="stat-label">Total Sales Today</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value">156</div>
+                        <div class="stat-label">Orders Today</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value">2,431</div>
+                        <div class="stat-label">Total Users</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value">847</div>
+                        <div class="stat-label">Products</div>
+                    </div>
+                </div>
+
+                <div class="data-table">
+                    <div class="table-header">
+                        <h2>Recent Orders</h2>
+                        <button class="btn btn-primary">View All</button>
+                    </div>
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Order ID</th>
+                                <th>Customer</th>
+                                <th>Date</th>
+                                <th>Total</th>
+                                <th>Status</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>#ORD-2024-156</strong></td>
+                                <td>John Doe</td>
+                                <td>Dec 24, 2024</td>
+                                <td><strong>$45.99</strong></td>
+                                <td><span class="status-badge status-pending">Processing</span></td>
+                                <td>
+                                    <div class="table-actions">
+                                        <button class="action-btn edit-btn">View</button>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><strong>#ORD-2024-155</strong></td>
+                                <td>Jane Smith</td>
+                                <td>Dec 24, 2024</td>
+                                <td><strong>$32.50</strong></td>
+                                <td><span class="status-badge status-completed">Delivered</span></td>
+                                <td>
+                                    <div class="table-actions">
+                                        <button class="action-btn edit-btn">View</button>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

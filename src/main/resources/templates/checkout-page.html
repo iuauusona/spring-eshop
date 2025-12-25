@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>FreshMart - Online Grocery Store</title>
-    <!-- <link rel="stylesheet" href="/css/styles.css"> -->
+    <title>Document</title>
+<!--    <link rel="stylesheet" href="/css/styles.css">-->
 <!--    <script src="/js/script.js"></script>-->
     <style>
         * {
@@ -1199,125 +1199,150 @@
         </div>
     </div>
 </header>
-    <!-- Home Page -->
-    <div id="home" class="page active">
+    <!-- Checkout Page -->
+    <div id="checkout" class="page active">
         <div class="container">
-            <!-- Hero Section -->
-            <div class="hero">
-                <h1>Fresh Groceries Delivered to Your Door</h1>
-                <p>Get the freshest produce, dairy, and more with free delivery on orders over $50</p>
-                <button class="btn">Shop Now →</button>
-            </div>
+            <h1 style="margin-bottom: 2rem;">Checkout</h1>
+            <div class="checkout-layout">
+                <div class="checkout-steps">
+                    <div class="step-indicator">
+                        <div class="step completed">
+                            <div class="step-number">1</div>
+                            <div>Shipping</div>
+                        </div>
+                        <div class="step active">
+                            <div class="step-number">2</div>
+                            <div>Payment</div>
+                        </div>
+                        <div class="step">
+                            <div class="step-number">3</div>
+                            <div>Confirm</div>
+                        </div>
+                    </div>
 
-            <!-- Categories -->
-            <h2 class="section-title">Shop by Category</h2>
-            <div class="categories-grid">
-                <div class="category-card">
-                    <div class="category-icon">🥬</div>
-                    <h3>Fresh Produce</h3>
-                    <p>Fruits & Vegetables</p>
-                </div>
-                <div class="category-card">
-                    <div class="category-icon">🥛</div>
-                    <h3>Dairy</h3>
-                    <p>Milk, Cheese & Eggs</p>
-                </div>
-                <div class="category-card">
-                    <div class="category-icon">🍞</div>
-                    <h3>Bakery</h3>
-                    <p>Fresh Bread & Pastries</p>
-                </div>
-                <div class="category-card">
-                    <div class="category-icon">🥩</div>
-                    <h3>Meat & Fish</h3>
-                    <p>Fresh & Frozen</p>
-                </div>
-                <div class="category-card">
-                    <div class="category-icon">🍝</div>
-                    <h3>Pantry</h3>
-                    <p>Pasta, Rice & Cans</p>
-                </div>
-                <div class="category-card">
-                    <div class="category-icon">🥤</div>
-                    <h3>Beverages</h3>
-                    <p>Drinks & Juices</p>
-                </div>
-            </div>
+                    <h2 style="margin-bottom: 1.5rem;">Shipping Address</h2>
+                    <form>
+                        <div class="form-group">
+                            <label>Full Name</label>
+                            <input type="text" class="form-input" placeholder="John Doe" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Phone Number</label>
+                            <input type="tel" class="form-input" placeholder="+1 (555) 123-4567" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Address</label>
+                            <input type="text" class="form-input" placeholder="123 Main Street" required>
+                        </div>
+                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+                            <div class="form-group">
+                                <label>City</label>
+                                <input type="text" class="form-input" placeholder="New York" required>
+                            </div>
+                            <div class="form-group">
+                                <label>ZIP Code</label>
+                                <input type="text" class="form-input" placeholder="10001" required>
+                            </div>
+                        </div>
 
-            <!-- Featured Products -->
-            <h2 class="section-title">Featured Products</h2>
-            <div class="products-grid">
-                <div class="product-card" onclick="showPage('product-detail')">
-                    <div class="product-image" style="background: linear-gradient(135deg, #ffd89b 0%, #19547b 100%);"></div>
-                    <div class="product-info">
-                        <h3 class="product-name">Organic Bananas</h3>
-                        <div class="product-rating">
-                            ⭐⭐⭐⭐⭐ <span style="color: var(--gray);">(124)</span>
+                        <h2 style="margin: 2rem 0 1.5rem;">Payment Method</h2>
+                        <div class="payment-methods">
+                            <div class="payment-option selected">
+                                <input type="radio" name="payment" checked>
+                                <div>
+                                    <strong>💳 Credit/Debit Card</strong>
+                                    <p style="color: var(--gray); font-size: 0.9rem;">Pay securely with your card</p>
+                                </div>
+                            </div>
+                            <div class="payment-option">
+                                <input type="radio" name="payment">
+                                <div>
+                                    <strong>💵 Cash on Delivery</strong>
+                                    <p style="color: var(--gray); font-size: 0.9rem;">Pay when you receive</p>
+                                </div>
+                            </div>
+                            <div class="payment-option">
+                                <input type="radio" name="payment">
+                                <div>
+                                    <strong>👛 Digital Wallet</strong>
+                                    <p style="color: var(--gray); font-size: 0.9rem;">PayPal, Apple Pay, Google Pay</p>
+                                </div>
+                            </div>
                         </div>
-                        <div class="product-price">$2.99</div>
-                        <button class="add-to-cart" onclick="event.stopPropagation(); addToCart()">Add to Cart</button>
-                    </div>
-                </div>
-                <div class="product-card">
-                    <div class="product-image" style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);"></div>
-                    <div class="product-info">
-                        <h3 class="product-name">Fresh Strawberries</h3>
-                        <div class="product-rating">
-                            ⭐⭐⭐⭐⭐ <span style="color: var(--gray);">(89)</span>
-                        </div>
-                        <div class="product-price">$4.99</div>
-                        <button class="add-to-cart" onclick="addToCart()">Add to Cart</button>
-                    </div>
-                </div>
-                <div class="product-card">
-                    <div class="product-image" style="background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);"></div>
-                    <div class="product-info">
-                        <h3 class="product-name">Organic Milk</h3>
-                        <div class="product-rating">
-                            ⭐⭐⭐⭐⭐ <span style="color: var(--gray);">(201)</span>
-                        </div>
-                        <div class="product-price">$5.49</div>
-                        <button class="add-to-cart" onclick="addToCart()">Add to Cart</button>
-                    </div>
-                </div>
-                <div class="product-card">
-                    <div class="product-image" style="background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);"></div>
-                    <div class="product-info">
-                        <h3 class="product-name">Whole Wheat Bread</h3>
-                        <div class="product-rating">
-                            ⭐⭐⭐⭐ <span style="color: var(--gray);">(156)</span>
-                        </div>
-                        <div class="product-price">$3.49</div>
-                        <button class="add-to-cart" onclick="addToCart()">Add to Cart</button>
-                    </div>
-                </div>
-            </div>
 
-            <!-- Benefits -->
-            <div class="benefits">
-                <div class="benefit-item">
-                    <div class="benefit-icon">🚚</div>
-                    <h3>Free Shipping</h3>
-                    <p>On orders over $50</p>
+                        <div style="margin-top: 2rem;">
+                            <div class="form-group">
+                                <label>Card Number</label>
+                                <input type="text" class="form-input" placeholder="1234 5678 9012 3456" required>
+                            </div>
+                            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+                                <div class="form-group">
+                                    <label>Expiry Date</label>
+                                    <input type="text" class="form-input" placeholder="MM/YY" required>
+                                </div>
+                                <div class="form-group">
+                                    <label>CVV</label>
+                                    <input type="text" class="form-input" placeholder="123" required>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="security-badge">
+                            🔒 Your payment information is encrypted and secure
+                        </div>
+                    </form>
                 </div>
-                <div class="benefit-item">
-                    <div class="benefit-icon">🔒</div>
-                    <h3>Secure Payment</h3>
-                    <p>100% secure transactions</p>
-                </div>
-                <div class="benefit-item">
-                    <div class="benefit-icon">↩️</div>
-                    <h3>Easy Returns</h3>
-                    <p>30-day return policy</p>
-                </div>
-                <div class="benefit-item">
-                    <div class="benefit-icon">⏰</div>
-                    <h3>24/7 Support</h3>
-                    <p>Dedicated customer service</p>
+
+                <div class="cart-summary">
+                    <h2 style="margin-bottom: 1.5rem;">Order Summary</h2>
+                    <div style="margin-bottom: 1.5rem;">
+                        <div style="display: flex; gap: 1rem; padding: 0.75rem 0; border-bottom: 1px solid var(--border);">
+                            <div style="width: 50px; height: 50px; border-radius: var(--radius-sm); background: linear-gradient(135deg, #ffd89b 0%, #19547b 100%);"></div>
+                            <div style="flex: 1;">
+                                <div style="font-weight: 600;">Organic Bananas</div>
+                                <div style="color: var(--gray); font-size: 0.9rem;">Qty: 2</div>
+                            </div>
+                            <div style="font-weight: 700;">$5.98</div>
+                        </div>
+                        <div style="display: flex; gap: 1rem; padding: 0.75rem 0; border-bottom: 1px solid var(--border);">
+                            <div style="width: 50px; height: 50px; border-radius: var(--radius-sm); background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);"></div>
+                            <div style="flex: 1;">
+                                <div style="font-weight: 600;">Organic Milk</div>
+                                <div style="color: var(--gray); font-size: 0.9rem;">Qty: 1</div>
+                            </div>
+                            <div style="font-weight: 700;">$5.49</div>
+                        </div>
+                        <div style="display: flex; gap: 1rem; padding: 0.75rem 0; border-bottom: 1px solid var(--border);">
+                            <div style="width: 50px; height: 50px; border-radius: var(--radius-sm); background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);"></div>
+                            <div style="flex: 1;">
+                                <div style="font-weight: 600;">Whole Wheat Bread</div>
+                                <div style="color: var(--gray); font-size: 0.9rem;">Qty: 1</div>
+                            </div>
+                            <div style="font-weight: 700;">$3.49</div>
+                        </div>
+                    </div>
+                    <div class="summary-row">
+                        <span>Subtotal</span>
+                        <span>$14.96</span>
+                    </div>
+                    <div class="summary-row">
+                        <span>Shipping</span>
+                        <span style="color: var(--primary);">FREE</span>
+                    </div>
+                    <div class="summary-row">
+                        <span>Tax</span>
+                        <span>$1.20</span>
+                    </div>
+                    <div class="summary-row">
+                        <span>Total</span>
+                        <span>$16.16</span>
+                    </div>
+                    <button class="btn btn-primary" style="width: 100%; margin-top: 1.5rem;" onclick="alert('Order placed successfully!'); showPage('orders')">Place Order</button>
                 </div>
             </div>
         </div>
     </div>
+</body>
 <!-- Footer -->
 <footer class="footer">
     <div class="footer-content">
@@ -1436,4 +1461,4 @@
     }
 
 </script>
-</body>
+</html>

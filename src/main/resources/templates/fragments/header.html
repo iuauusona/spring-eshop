@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>FreshMart - Online Grocery Store</title>
-    <!-- <link rel="stylesheet" href="/css/styles.css"> -->
+    <title>Header</title>
+<!--    <link rel="stylesheet" href="/css/styles.css">-->
 <!--    <script src="/js/script.js"></script>-->
     <style>
         * {
@@ -1174,194 +1174,32 @@
     </style>
 </head>
 <body>
-<!-- Header -->
-<header class="header">
-    <div class="header-container">
-        <a href="/index" class="logo">
-            🛒 FreshMart
-        </a>
-        <nav class="nav">
-            <a href="/index" class="nav-link">Home</a>
-            <a href="/products" class="nav-link">Shop</a>
-            <a href="#" class="nav-link">About</a>
-            <a href="#" class="nav-link">Contact</a>
-        </nav>
-        <div class="search-bar">
-            <input type="text" placeholder="Search for groceries...">
-            <button class="search-btn">🔍</button>
-        </div>
-        <div class="header-actions">
-            <button class="icon-btn"><a href="/bucket">🛒</a>
-                <span class="badge">3</span>
-            </button>
-            <button class="icon-btn"><a href="/login">👤</a>
-            </button>
-        </div>
-    </div>
-</header>
-    <!-- Home Page -->
-    <div id="home" class="page active">
-        <div class="container">
-            <!-- Hero Section -->
-            <div class="hero">
-                <h1>Fresh Groceries Delivered to Your Door</h1>
-                <p>Get the freshest produce, dairy, and more with free delivery on orders over $50</p>
-                <button class="btn">Shop Now →</button>
+    <!-- Header -->
+    <header class="header">
+        <div class="header-container">
+            <a href="/index" class="logo">
+                🛒 FreshMart
+            </a>
+            <nav class="nav">
+                <a href="/index" class="nav-link">Home</a>
+                <a href="/products" class="nav-link">Shop</a>
+                <a href="#" class="nav-link">About</a>
+                <a href="#" class="nav-link">Contact</a>
+            </nav>
+            <div class="search-bar">
+                <input type="text" placeholder="Search for groceries...">
+                <button class="search-btn">🔍</button>
             </div>
-
-            <!-- Categories -->
-            <h2 class="section-title">Shop by Category</h2>
-            <div class="categories-grid">
-                <div class="category-card">
-                    <div class="category-icon">🥬</div>
-                    <h3>Fresh Produce</h3>
-                    <p>Fruits & Vegetables</p>
-                </div>
-                <div class="category-card">
-                    <div class="category-icon">🥛</div>
-                    <h3>Dairy</h3>
-                    <p>Milk, Cheese & Eggs</p>
-                </div>
-                <div class="category-card">
-                    <div class="category-icon">🍞</div>
-                    <h3>Bakery</h3>
-                    <p>Fresh Bread & Pastries</p>
-                </div>
-                <div class="category-card">
-                    <div class="category-icon">🥩</div>
-                    <h3>Meat & Fish</h3>
-                    <p>Fresh & Frozen</p>
-                </div>
-                <div class="category-card">
-                    <div class="category-icon">🍝</div>
-                    <h3>Pantry</h3>
-                    <p>Pasta, Rice & Cans</p>
-                </div>
-                <div class="category-card">
-                    <div class="category-icon">🥤</div>
-                    <h3>Beverages</h3>
-                    <p>Drinks & Juices</p>
-                </div>
-            </div>
-
-            <!-- Featured Products -->
-            <h2 class="section-title">Featured Products</h2>
-            <div class="products-grid">
-                <div class="product-card" onclick="showPage('product-detail')">
-                    <div class="product-image" style="background: linear-gradient(135deg, #ffd89b 0%, #19547b 100%);"></div>
-                    <div class="product-info">
-                        <h3 class="product-name">Organic Bananas</h3>
-                        <div class="product-rating">
-                            ⭐⭐⭐⭐⭐ <span style="color: var(--gray);">(124)</span>
-                        </div>
-                        <div class="product-price">$2.99</div>
-                        <button class="add-to-cart" onclick="event.stopPropagation(); addToCart()">Add to Cart</button>
-                    </div>
-                </div>
-                <div class="product-card">
-                    <div class="product-image" style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);"></div>
-                    <div class="product-info">
-                        <h3 class="product-name">Fresh Strawberries</h3>
-                        <div class="product-rating">
-                            ⭐⭐⭐⭐⭐ <span style="color: var(--gray);">(89)</span>
-                        </div>
-                        <div class="product-price">$4.99</div>
-                        <button class="add-to-cart" onclick="addToCart()">Add to Cart</button>
-                    </div>
-                </div>
-                <div class="product-card">
-                    <div class="product-image" style="background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);"></div>
-                    <div class="product-info">
-                        <h3 class="product-name">Organic Milk</h3>
-                        <div class="product-rating">
-                            ⭐⭐⭐⭐⭐ <span style="color: var(--gray);">(201)</span>
-                        </div>
-                        <div class="product-price">$5.49</div>
-                        <button class="add-to-cart" onclick="addToCart()">Add to Cart</button>
-                    </div>
-                </div>
-                <div class="product-card">
-                    <div class="product-image" style="background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);"></div>
-                    <div class="product-info">
-                        <h3 class="product-name">Whole Wheat Bread</h3>
-                        <div class="product-rating">
-                            ⭐⭐⭐⭐ <span style="color: var(--gray);">(156)</span>
-                        </div>
-                        <div class="product-price">$3.49</div>
-                        <button class="add-to-cart" onclick="addToCart()">Add to Cart</button>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Benefits -->
-            <div class="benefits">
-                <div class="benefit-item">
-                    <div class="benefit-icon">🚚</div>
-                    <h3>Free Shipping</h3>
-                    <p>On orders over $50</p>
-                </div>
-                <div class="benefit-item">
-                    <div class="benefit-icon">🔒</div>
-                    <h3>Secure Payment</h3>
-                    <p>100% secure transactions</p>
-                </div>
-                <div class="benefit-item">
-                    <div class="benefit-icon">↩️</div>
-                    <h3>Easy Returns</h3>
-                    <p>30-day return policy</p>
-                </div>
-                <div class="benefit-item">
-                    <div class="benefit-icon">⏰</div>
-                    <h3>24/7 Support</h3>
-                    <p>Dedicated customer service</p>
-                </div>
+            <div class="header-actions">
+                <button class="icon-btn"><a href="/bucket">🛒</a>
+                    <span class="badge">3</span>
+                </button>
+                <button class="icon-btn"><a href="/login">👤</a>
+                </button>
             </div>
         </div>
-    </div>
-<!-- Footer -->
-<footer class="footer">
-    <div class="footer-content">
-        <div class="footer-section">
-            <h3>FreshMart</h3>
-            <p>Your trusted online grocery store delivering fresh products to your doorstep.</p>
-            <div class="social-icons">
-                <a href="#">📘</a>
-                <a href="#">📷</a>
-                <a href="#">🐦</a>
-            </div>
-        </div>
-        <div class="footer-section">
-            <h3>Quick Links</h3>
-            <ul>
-                <li><a href="#" onclick="showPage('home')">Home</a></li>
-                <li><a href="#" onclick="showPage('shop')">Shop</a></li>
-                <li><a href="#">About Us</a></li>
-                <li><a href="#">Contact</a></li>
-            </ul>
-        </div>
-        <div class="footer-section">
-            <h3>Customer Service</h3>
-            <ul>
-                <li><a href="#">Help Center</a></li>
-                <li><a href="#">Track Order</a></li>
-                <li><a href="#">Returns</a></li>
-                <li><a href="#">Shipping Info</a></li>
-            </ul>
-        </div>
-        <div class="footer-section">
-            <h3>Contact Us</h3>
-            <ul>
-                <li>📧 support@freshmart.com</li>
-                <li>📞 +1 (555) 123-4567</li>
-                <li>📍 123 Market St, NY 10001</li>
-            </ul>
-        </div>
-    </div>
-    <div class="footer-bottom">
-        <p>&copy; 2024 FreshMart. All rights reserved. | Privacy Policy | Terms of Service</p>
-        <p style="margin-top: 0.5rem;">💳 Accepted: Visa, Mastercard, PayPal, Apple Pay, Google Pay</p>
-    </div>
-</footer>
+    </header>
+</body>
 <script>
     function addToCart() {
         alert('Product added to cart!');
@@ -1435,5 +1273,8 @@
             });
     }
 
+    loadFragment("header", "/fragments/header.html");
+    loadFragment("footer", "/fragments/footer.html");
+
 </script>
-</body>
+</html>
