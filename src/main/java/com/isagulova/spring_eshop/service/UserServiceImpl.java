@@ -42,6 +42,8 @@ public class UserServiceImpl implements UserService {
                 .email(userDTO.getEmail())
                 .role(Role.CLIENT)
                 .activeCode(UUID.randomUUID().toString())
+                .address(userDTO.getAddress())
+                .phoneNumber(userDTO.getPhoneNumber())
                 .build();
         userRepository.save(user);
         mailSenderService.sendActivateCode(user);
@@ -65,6 +67,8 @@ public class UserServiceImpl implements UserService {
         return UserDTO.builder()
                 .username(user.getName())
                 .email(user.getEmail())
+                .phoneNumber(user.getPhoneNumber())
+                .address(user.getAddress())
                 .build();
     }
 
@@ -91,7 +95,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Transactional
-    @Override
+    @Override //here I have to add updating phoneNumber, address
     public void updateProfile(UserDTO dto) {
         User savedUser = userRepository.findByName(dto.getUsername());//findFirstByName
         if (savedUser == null) {

@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:sec="http://www.w3.org/1999/xhtml">
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml" xmlns:sec="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Account Activation</title>
+    <!-- Вставляем твои стили здесь -->
     <style>
         * {
             margin: 0;
@@ -1202,53 +1202,27 @@
         </div>
     </div>
 </header>
-    <!-- Orders Page -->
-    <div id="orders" class="page">
-        <div class="container">
-            <h1 style="margin-bottom: 2rem;">Order History</h1>
-            <div class="data-table">
-                <table class="orders-table">
-                    <thead>
-                        <tr>
-                            <th>Order ID</th>
-                            <th>Date</th>
-                            <th>Items</th>
-                            <th>Total</th>
-                            <th>Status</th>
-                            <th>Action</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td><strong>#ORD-2024-001</strong></td>
-                            <td>Dec 20, 2024</td>
-                            <td>3 items</td>
-                            <td><strong>$16.16</strong></td>
-                            <td><span class="status-badge status-completed">Delivered</span></td>
-                            <td><button class="btn btn-primary" style="padding: 0.5rem 1rem; font-size: 0.9rem;">View Details</button></td>
-                        </tr>
-                        <tr>
-                            <td><strong>#ORD-2024-002</strong></td>
-                            <td>Dec 18, 2024</td>
-                            <td>5 items</td>
-                            <td><strong>$32.45</strong></td>
-                            <td><span class="status-badge status-pending">Processing</span></td>
-                            <td><button class="btn btn-primary" style="padding: 0.5rem 1rem; font-size: 0.9rem;">View Details</button></td>
-                        </tr>
-                        <tr>
-                            <td><strong>#ORD-2024-003</strong></td>
-                            <td>Dec 15, 2024</td>
-                            <td>2 items</td>
-                            <td><strong>$24.99</strong></td>
-                            <td><span class="status-badge status-completed">Delivered</span></td>
-                            <td><button class="btn btn-primary" style="padding: 0.5rem 1rem; font-size: 0.9rem;">View Details</button></td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
+<div class="auth-container">
+    <!-- Успешная активация -->
+    <div th:if="${activated}">
+        <div class="auth-header">
+            <h1>🎉 Account Activated!</h1>
+            <p>Your account has been successfully activated.<br>
+                You can now log in and start using our services.</p>
         </div>
+        <a th:href="@{/login}" class="btn btn-primary">Go to Login</a>
     </div>
-</body>
+
+    <!-- Неуспешная активация -->
+    <div th:if="${!activated}">
+        <div class="auth-header">
+            <h1>⚠ Activation Failed</h1>
+            <p>Your account could not be activated.<br>
+                Please try again later or contact support.</p>
+        </div>
+        <a th:href="@{/login}" class="btn btn-primary">Go to Login</a>
+    </div>
+</div>
 <!-- Footer -->
 <footer class="footer">
     <div class="footer-content">
@@ -1264,8 +1238,8 @@
         <div class="footer-section">
             <h3>Quick Links</h3>
             <ul>
-                <li><a href="#" onclick="showPage('home')">Home</a></li>
-                <li><a href="#" onclick="showPage('shop')">Shop</a></li>
+                <li><a href="/">Home</a></li>
+                <li><a href="/products">Shop</a></li>
                 <li><a href="#">About Us</a></li>
                 <li><a href="#">Contact</a></li>
             </ul>
@@ -1293,78 +1267,5 @@
         <p style="margin-top: 0.5rem;">💳 Accepted: Visa, Mastercard, PayPal, Apple Pay, Google Pay</p>
     </div>
 </footer>
-<script>
-    function addToCart() {
-        alert('Product added to cart!');
-        // Update cart badge
-        const badge = document.querySelector('.badge');
-        badge.textContent = parseInt(badge.textContent) + 1;
-    }
-
-    function switchTab(event, tabName) {
-        const tabs = document.querySelectorAll('.tab');
-        const tabContents = document.querySelectorAll('.tab-content');
-
-        tabs.forEach(tab => tab.classList.remove('active'));
-        tabContents.forEach(content => content.classList.remove('active'));
-
-        event.target.classList.add('active');
-        document.getElementById(tabName).classList.add('active');
-    }
-
-    function switchProfileTab(tabName) {
-        const menuItems = document.querySelectorAll('.profile-menu li');
-        menuItems.forEach(item => item.classList.remove('active'));
-        event.target.classList.add('active');
-    }
-
-    function switchAdminTab(tabName) {
-        const menuItems = document.querySelectorAll('.admin-menu li');
-        menuItems.forEach(item => item.classList.remove('active'));
-    }
-
-    // Quantity selector functionality
-    document.addEventListener('click', function(e) {
-        if (e.target.classList.contains('qty-btn')) {
-            const input = e.target.parentElement.querySelector('.qty-input');
-            const currentValue = parseInt(input.value);
-
-            if (e.target.textContent === '+') {
-                input.value = currentValue + 1;
-            } else if (e.target.textContent === '-' && currentValue > 1) {
-                input.value = currentValue - 1;
-            }
-        }
-    });
-
-    // Payment method selection
-    document.addEventListener('click', function(e) {
-        if (e.target.closest('.payment-option')) {
-            document.querySelectorAll('.payment-option').forEach(option => {
-                option.classList.remove('selected');
-            });
-            e.target.closest('.payment-option').classList.add('selected');
-        }
-    });
-
-    // Option button selection
-    document.addEventListener('click', function(e) {
-        if (e.target.classList.contains('option-btn')) {
-            const group = e.target.parentElement;
-            group.querySelectorAll('.option-btn').forEach(btn => {
-                btn.classList.remove('selected');
-            });
-            e.target.classList.add('selected');
-        }
-    });
-
-    function loadFragment(id, file) {
-        fetch(file)
-            .then(res => res.text())
-            .then(data => {
-                document.getElementById(id).innerHTML = data;
-            });
-    }
-
-</script>
+</body>
 </html>

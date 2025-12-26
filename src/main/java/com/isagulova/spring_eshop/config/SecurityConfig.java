@@ -38,8 +38,8 @@ public class SecurityConfig {
                 .csrf(customizer -> customizer.disable())
                 .authenticationProvider(provider)
                 .authorizeHttpRequests(auth -> auth
-                                .requestMatchers("/ws").permitAll()
-                                .requestMatchers("/", "/login", "/auth", "/login-error").permitAll()
+                                .requestMatchers("/ws", "/products", "/notifyPage", "/users/activate/**").permitAll()
+                                .requestMatchers("/", "/login", "/register", "/auth", "/login-error").permitAll()
                                 .requestMatchers("/users").hasRole("ADMIN")
                                 .requestMatchers("/users").hasRole("MANAGER")
 //                              .requestMatchers("/users/new").hasRole("ADMIN")

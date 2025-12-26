@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:sec="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -1174,15 +1174,15 @@
     </style>
 </head>
 <body>
-<!-- Header -->
 <header class="header">
     <div class="header-container">
         <a href="/index" class="logo">
             🛒 FreshMart
         </a>
         <nav class="nav">
-            <a href="/index" class="nav-link">Home</a>
+            <a href="/" class="nav-link">Home</a>
             <a href="/products" class="nav-link">Shop</a>
+            <a href="/users" sec:authorize="hasAnyAuthority('ROLE_ADMIN', 'ROLE_MANAGER')" class="nav-link">Users</a>
             <a href="#" class="nav-link">About</a>
             <a href="#" class="nav-link">Contact</a>
         </nav>
@@ -1191,11 +1191,16 @@
             <button class="search-btn">🔍</button>
         </div>
         <div class="header-actions">
-            <button class="icon-btn"><a href="/bucket">🛒</a>
+            <button sec:authorize="isAuthenticated()" class="icon-btn"><a href="/bucket">🛒</a>
                 <span class="badge">3</span>
             </button>
-            <button class="icon-btn"><a href="/login">👤</a>
+            <button sec:authorize="!isAuthenticated()" class="icon-btn"><a href="/login">👤Login</a>
             </button>
+            <div sec:authorize="isAuthenticated()">
+                <button class="icon-btn"><a th:href="@{/users/profile}">👤<span sec:authentication="principal.username">Bill</span></a></button>
+                <button sec:authorize="isAuthenticated()" class="icon-btn"><a href="/logout">➜]</a>
+                </button>
+            </div>
         </div>
     </div>
 </header>
@@ -1204,34 +1209,41 @@
         <div class="auth-container">
             <div class="auth-header">
                 <h1>Create Account</h1>
-                <p>Join FreshMart today (optional - guest checkout available)</p>
             </div>
-            <form>
+            <form th:action="@{/register}" th:object="${user}" method="post">
                 <div class="form-group">
-                    <label>Full Name</label>
-                    <input type="text" class="form-input" placeholder="John Doe" required>
+                    <label>Username</label>
+                    <input type="text" th:field="*{username}" class="form-input" placeholder="JohnDoe" required>
                 </div>
                 <div class="form-group">
                     <label>Email Address</label>
-                    <input type="email" class="form-input" placeholder="you@example.com" required>
+                    <input type="email" th:field="*{email}" class="form-input" placeholder="you@example.com" required>
+                </div>
+                <div class="form-group">
+                    <label>Phone Number</label>
+                    <input type="text" th:field="*{phoneNumber}" class="form-input" placeholder="+996xxxxxxxxx" required>
+                </div>
+                <div class="form-group">
+                    <label>Address</label>
+                    <input type="text" th:field="*{address}" class="form-input" required>
                 </div>
                 <div class="form-group">
                     <label>Password</label>
-                    <input type="password" class="form-input" placeholder="••••••••" required>
+                    <input type="password" th:field="*{password}" class="form-input" placeholder="••••••••" required>
                     <small style="color: var(--gray);">Must be at least 8 characters with letters and numbers</small>
                 </div>
                 <div class="form-group">
                     <label>Confirm Password</label>
-                    <input type="password" class="form-input" placeholder="••••••••" required>
+                    <input type="password" th:field="*{matchingPassword}" class="form-input" placeholder="••••••••" required>
                 </div>
                 <div class="checkbox-group" style="margin-bottom: 1.5rem;">
                     <input type="checkbox" id="terms" required>
                     <label for="terms">I agree to the <a href="#" style="color: var(--primary);">Terms & Privacy Policy</a></label>
                 </div>
-                <button type="submit" class="btn btn-primary" style="width: 100%;"><a href="/user-profile.html">Create Account</a></button>
+                <button type="submit" class="btn btn-primary" style="width: 100%;">Create Account</button>
             </form>
             <div class="auth-footer">
-                Already have an account? <a href="/sign-in.html">Sign in</a>
+                Already have an account? <a href="/login">Sign in</a>
             </div>
         </div>
     </div>
@@ -1251,8 +1263,8 @@
         <div class="footer-section">
             <h3>Quick Links</h3>
             <ul>
-                <li><a href="#" onclick="showPage('home')">Home</a></li>
-                <li><a href="#" onclick="showPage('shop')">Shop</a></li>
+                <li><a href="/">Home</a></li>
+                <li><a href="/products">Shop</a></li>
                 <li><a href="#">About Us</a></li>
                 <li><a href="#">Contact</a></li>
             </ul>

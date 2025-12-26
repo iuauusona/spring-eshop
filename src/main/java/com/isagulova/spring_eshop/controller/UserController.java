@@ -24,13 +24,13 @@ public class UserController {
         this.userService = userService;
     }
 
-    @PreAuthorize("hasRole('ADMIN')")
-    @GetMapping("/new")
-    public String newModel(Model model) {
-        System.out.println("Called method newUser");
-        model.addAttribute("user", new UserDTO());
-        return "user";
-    }
+//    @PreAuthorize("hasRole('ADMIN')")
+//    @GetMapping("/new")
+//    public String newModel(Model model) {
+//        System.out.println("Called method newUser");
+//        model.addAttribute("user", new UserDTO());
+//        return "user";
+//    }
 
     @PostAuthorize("isAuthenticated() and #username == authentication.principal.username")
     @GetMapping("/{name}/roles")
@@ -76,21 +76,21 @@ public class UserController {
         return "redirect:/users/profile";
     }
 
-    @GetMapping
-    public String userList(Model model) {
-        model.addAttribute("users", userService.getAll());
-        return "userList";
-    }
+//    @GetMapping
+//    public String userList(Model model) {
+//        model.addAttribute("users", userService.getAll());
+//        return "userList";
+//    }
 
-    @PostMapping("/new")
-    public String saveUser(UserDTO dto, Model model) {
-        if (userService.save(dto)) {
-            return "redirect:/users";
-        } else {
-            model.addAttribute("user", dto);
-            return "user";
-        }
-    }
+//    @PostMapping("/new")
+//    public String saveUser(UserDTO dto, Model model) {
+//        if (userService.save(dto)) {
+//            return "redirect:/users";
+//        } else {
+//            model.addAttribute("user", dto);
+//            return "user";
+//        }
+//    }
 
     @GetMapping("/activate/{code}")
     public String activateUser(Model model, @PathVariable("code") String activateCode){

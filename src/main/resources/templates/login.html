@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:sec="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -1181,8 +1181,9 @@
             🛒 FreshMart
         </a>
         <nav class="nav">
-            <a href="/index" class="nav-link">Home</a>
+            <a href="/" class="nav-link">Home</a>
             <a href="/products" class="nav-link">Shop</a>
+            <a href="/users" sec:authorize="hasAnyAuthority('ROLE_ADMIN', 'ROLE_MANAGER')" class="nav-link">Users</a>
             <a href="#" class="nav-link">About</a>
             <a href="#" class="nav-link">Contact</a>
         </nav>
@@ -1191,11 +1192,16 @@
             <button class="search-btn">🔍</button>
         </div>
         <div class="header-actions">
-            <button class="icon-btn"><a href="/bucket">🛒</a>
+            <button sec:authorize="isAuthenticated()" class="icon-btn"><a href="/bucket">🛒</a>
                 <span class="badge">3</span>
             </button>
-            <button class="icon-btn"><a href="/login">👤</a>
+            <button sec:authorize="!isAuthenticated()" class="icon-btn"><a href="/login">👤Login</a>
             </button>
+            <div sec:authorize="isAuthenticated()">
+                <button class="icon-btn"><a th:href="@{/users/profile}">👤<span sec:authentication="principal.username">Bill</span></a></button>
+            <button sec:authorize="isAuthenticated()" class="icon-btn"><a href="/logout">➜]</a>
+            </button>
+            </div>
         </div>
     </div>
 </header>
@@ -1206,20 +1212,21 @@
                 <h1>Welcome Back</h1>
                 <p>Sign in to your FreshMart account</p>
             </div>
-            <form>
+            <p th:if="${loginError}" class="error">Wrong user or password</p>
+            <form th:action="@{/auth}" method="post">
                 <div class="form-group">
-                    <label>Email Address</label>
-                    <input type="email" class="form-input" placeholder="you@example.com" required>
+                    <label>Username</label>
+                    <input type="text" name="username" class="form-input" required>
                 </div>
                 <div class="form-group">
                     <label>Password</label>
-                    <input type="password" class="form-input" placeholder="••••••••" required>
+                    <input type="password" name="password" class="form-input" required>
                 </div>
                 <div class="checkbox-group" style="margin-bottom: 1.5rem;">
                     <input type="checkbox" id="remember">
                     <label for="remember">Remember me</label>
                 </div>
-                <button type="submit" class="btn btn-primary" style="width: 100%;"><a href="/users/profile">Sign In</a></button>
+                <button type="submit" class="btn btn-primary" style="width: 100%;">Sign In</button>
                 <div style="text-align: center; margin-top: 1rem;">
                     <a href="#" style="color: var(--primary); text-decoration: none;">Forgot password?</a>
                 </div>
@@ -1248,8 +1255,8 @@
         <div class="footer-section">
             <h3>Quick Links</h3>
             <ul>
-                <li><a href="#" onclick="showPage('home')">Home</a></li>
-                <li><a href="#" onclick="showPage('shop')">Shop</a></li>
+                <li><a href="/">Home</a></li>
+                <li><a href="/products">Shop</a></li>
                 <li><a href="#">About Us</a></li>
                 <li><a href="#">Contact</a></li>
             </ul>

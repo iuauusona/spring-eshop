@@ -16,4 +16,6 @@ public class UserDTO {
     private String email;
     private String matchingPassword;
     private boolean activated;
+    private String phoneNumber;
+    private String address;
 }

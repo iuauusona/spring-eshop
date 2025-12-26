@@ -26,5 +26,7 @@ public class User {
     private Bucket bucket;
     @Column(name = "activate_code", length = 80)
     private String activeCode;
+    private String phoneNumber;
+    private String address;
 
 }
