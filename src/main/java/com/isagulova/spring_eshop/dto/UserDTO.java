@@ -1,6 +1,7 @@
 package com.isagulova.spring_eshop.dto;
 
 
+import com.isagulova.spring_eshop.domain.Role;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -15,7 +16,9 @@ public class UserDTO {
     private String password;
     private String email;
     private String matchingPassword;
+    private boolean archived;
     private boolean activated;
     private String phoneNumber;
     private String address;
+    private Role role;
 }

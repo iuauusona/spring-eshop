@@ -20,4 +20,8 @@ public interface UserService extends UserDetailsService { //security
     void updateProfile(UserDTO dto);
 
     boolean activateUser(String activateCode);
+
+    void deleteById(String username);
+//    void updateById(String username);
+    UserDTO toDTO(User user);
 }

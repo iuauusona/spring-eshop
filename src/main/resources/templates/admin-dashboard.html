@@ -470,7 +470,7 @@
         <nav class="nav">
             <a href="/" class="nav-link">Home</a>
             <a href="/products" class="nav-link">Shop</a>
-            <a href="/users" sec:authorize="hasAnyAuthority('ROLE_ADMIN', 'ROLE_MANAGER')" class="nav-link">Admin Dash</a>
+            <a href="/users/adminDash" sec:authorize="hasAnyAuthority('ROLE_ADMIN', 'ROLE_MANAGER')" class="nav-link">Admin Dash</a>
             <a href="#" class="nav-link">About</a>
             <a href="#" class="nav-link">Contact</a>
         </nav>
@@ -579,19 +579,25 @@
 <!-- Manage sections -->
 <div class="manage">
     <div class="manage-card">
-        <div class="icon">📦</div>
-        <div>Manage Products</div>
-        <div>Add, edit, or remove products</div>
+        <a href="#">
+            <div class="icon">📦</div>
+            <div>Manage Products</div>
+            <div>Add, edit, or remove products</div>
+        </a>
     </div>
     <div class="manage-card">
-        <div class="icon">🛒</div>
-        <div>Manage Orders</div>
-        <div>View and update order status</div>
+        <a href="#">
+            <div class="icon">🛒</div>
+            <div>Manage Orders</div>
+            <div>View and update order status</div>
+        </a>
     </div>
     <div class="manage-card">
-        <div class="icon">👤</div>
-        <div>Manage Users</div>
-        <div>View and manage user accounts</div>
+        <a href="/users">
+            <div class="icon">👤</div>
+            <div>Manage Users</div>
+            <div>View and manage user accounts</div>
+        </a>
     </div>
 </div>
 </div>

@@ -11,6 +11,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
+import java.util.List;
 import java.util.Objects;
 
 @Controller
@@ -77,25 +78,60 @@ public class UserController {
         return "redirect:/users/profile";
     }
 
-    @GetMapping
+    @PreAuthorize("hasRole('ADMIN')")
+    @GetMapping("/adminDash")
     public String getAdminDash(){
         return "admin-dashboard";
     }
-//    @GetMapping
-//    public String userList(Model model) {
-//        model.addAttribute("users", userService.getAll());
-//        return "userList";
+
+    @PreAuthorize("hasRole('ADMIN')")
+    @GetMapping
+    public String userList(Model model) {
+        model.addAttribute("users", userService.getAll());
+        model.addAttribute("user", new UserDTO());
+        model.addAttribute("roles", List.of("ADMIN", "MANAGER", "CLIENT"));
+        System.out.println("Called method getAll(): " + userService.getAll());
+        return "admin-users-page";
+    }
+
+    @PreAuthorize("hasRole('ADMIN')")
+    @PostMapping("/new")
+    public String saveUser(UserDTO dto, Model model) {
+        if (userService.save(dto)) {
+            return "redirect:/users";
+        } else {
+            model.addAttribute("user", dto);
+            return "admin-users-page";
+        }
+    }
+    // Удаление по ID
+    @PreAuthorize("hasRole('ADMIN')")
+    @PostMapping("/delete/{username}")
+    public String deleteUser(@PathVariable String username) {
+        userService.deleteById(username);
+        return "redirect:/users";
+    }
+
+//    @PostMapping("/update/{username}")
+//    public String updateUser(@PathVariable String username,  UserDTO dto, Model model) {
+//        if (dto.getPassword() != null
+//                && !dto.getPassword().isEmpty()
+//                && !Objects.equals(dto.getPassword(), dto.getMatchingPassword())) {
+//            model.addAttribute("users", dto);
+//            return "admin-users-page";
+//        }
+//        userService.updateById(username);
+//        return "redirect:/users";
+//    }
+//    @GetMapping("/update/{username}")
+//    public String updateUser(@PathVariable String username, Model model) {
+//        User user = userService.findByName(username);
+//        UserDTO dto = userService.toDTO(user);
+//        model.addAttribute("user", dto);
+//        model.addAttribute("roles", List.of("ADMIN", "MANAGER", "CLIENT"));
+//        return "admin-users-page"; // та же страница с формой
 //    }
 
-//    @PostMapping("/new")
-//    public String saveUser(UserDTO dto, Model model) {
-//        if (userService.save(dto)) {
-//            return "redirect:/users";
-//        } else {
-//            model.addAttribute("user", dto);
-//            return "user";
-//        }
-//    }
 
     @GetMapping("/activate/{code}")
     public String activateUser(Model model, @PathVariable("code") String activateCode){

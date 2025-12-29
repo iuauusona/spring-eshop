@@ -1,6 +1,5 @@
 package com.isagulova.spring_eshop.service;
 
-import ch.qos.logback.classic.Logger;
 import jakarta.transaction.Transactional;
 import com.isagulova.spring_eshop.dao.UserRepository;
 import com.isagulova.spring_eshop.domain.Role;
@@ -13,7 +12,6 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.security.Principal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -65,12 +63,16 @@ public class UserServiceImpl implements UserService {
 
     }
 
-    private UserDTO toDTO(User user) {
+    @Override
+    public UserDTO toDTO(User user) {
         return UserDTO.builder()
                 .username(user.getName())
                 .email(user.getEmail())
                 .phoneNumber(user.getPhoneNumber())
                 .address(user.getAddress())
+                .role(user.getRole())
+                .archived(user.isArchived())
+                .activated(user.getActiveCode() == null)
                 .build();
     }
 
@@ -143,5 +145,22 @@ public class UserServiceImpl implements UserService {
         return true;
     }
 
+    @Override
+    public void deleteById(String username) {
+        User user = userRepository.findByName(username);
+        if (user == null) {
+            throw new RuntimeException("User not found with username: " + username);
+        }
+        userRepository.delete(user);
+    }
+//    @Override
+//    public void updateById(String username){
+//        User user = userRepository.findByName(username);
+//        if (user == null) {
+//            throw new RuntimeException("User not found with username: " + username);
+//        }
+//        UserDTO dto = toDTO(user);
+//        updateProfile(dto);
+//    }
 
 }
