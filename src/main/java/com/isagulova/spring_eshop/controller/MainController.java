@@ -51,14 +51,14 @@ public class MainController {
         if (userService.save(dto)) {
             return "redirect:/notifyPage";
         } else {
-            model.addAttribute("user", dto);
+            //model.addAttribute("user", dto);
             return "register";
         }
     }
 
     @GetMapping("/notifyPage")
     public String showNotifyPage() {
-        return "notifyPage";
+        return "notifyAboutActivation";
     }
 
     @RequestMapping("/login-error")

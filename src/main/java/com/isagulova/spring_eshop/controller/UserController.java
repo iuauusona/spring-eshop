@@ -4,7 +4,6 @@ package com.isagulova.spring_eshop.controller;
 import com.isagulova.spring_eshop.domain.User;
 import com.isagulova.spring_eshop.dto.UserDTO;
 import com.isagulova.spring_eshop.service.UserService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PostAuthorize;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
@@ -53,13 +52,15 @@ public class UserController {
         UserDTO userDTO = UserDTO.builder()
                 .username(user.getName())
                 .email(user.getEmail())
+                .address(user.getAddress())
+                .phoneNumber(user.getPhoneNumber())
                 .activated(user.getActiveCode() == null)
                 .build();
-        model.addAttribute("user", userDTO);
+        model.addAttribute("users", userDTO);
         return "profile";
     }
 
-    @PostAuthorize("isAuthenticated()")
+    @PreAuthorize("isAuthenticated()")
     @PostMapping("/profile")
     public String updateProfileUser(UserDTO dto, Model model, Principal principal) {
         if (principal == null || !Objects.equals(principal.getName(), dto.getUsername())) {
@@ -68,7 +69,7 @@ public class UserController {
         if (dto.getPassword() != null
                 && !dto.getPassword().isEmpty()
                 && !Objects.equals(dto.getPassword(), dto.getMatchingPassword())) {
-            model.addAttribute("user", dto);
+            model.addAttribute("users", dto);
             //нужно добавить какое-то сообщение, но сделаем это другой раз
             return "profile";
         }
@@ -76,6 +77,10 @@ public class UserController {
         return "redirect:/users/profile";
     }
 
+    @GetMapping
+    public String getAdminDash(){
+        return "admin-dashboard";
+    }
 //    @GetMapping
 //    public String userList(Model model) {
 //        model.addAttribute("users", userService.getAll());
@@ -96,6 +101,6 @@ public class UserController {
     public String activateUser(Model model, @PathVariable("code") String activateCode){
         boolean activated = userService.activateUser(activateCode);
         model.addAttribute("activated", activated);
-        return "active-user";
+        return "feedbackAboutActivation";
     }
 }

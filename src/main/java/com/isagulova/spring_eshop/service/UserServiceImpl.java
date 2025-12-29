@@ -1,5 +1,6 @@
 package com.isagulova.spring_eshop.service;
 
+import ch.qos.logback.classic.Logger;
 import jakarta.transaction.Transactional;
 import com.isagulova.spring_eshop.dao.UserRepository;
 import com.isagulova.spring_eshop.domain.Role;
@@ -12,6 +13,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.security.Principal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -95,7 +97,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Transactional
-    @Override //here I have to add updating phoneNumber, address
+    @Override
     public void updateProfile(UserDTO dto) {
         User savedUser = userRepository.findByName(dto.getUsername());//findFirstByName
         if (savedUser == null) {
@@ -106,12 +108,26 @@ public class UserServiceImpl implements UserService {
             savedUser.setPassword(passwordEncoder.encode(dto.getPassword()));
             isChanged = true;
         }
+        if (!Objects.equals(dto.getAddress(), savedUser.getAddress())) {
+            savedUser.setAddress(dto.getAddress());
+            isChanged = true;
+        }
+        if (!Objects.equals(dto.getPhoneNumber(), savedUser.getPhoneNumber())) {
+            savedUser.setPhoneNumber(dto.getPhoneNumber());
+            isChanged = true;
+        }
+        boolean emailChanged = false;
         if (!Objects.equals(dto.getEmail(), savedUser.getEmail())) {
             savedUser.setEmail(dto.getEmail());
-            isChanged = true;
+            savedUser.setActiveCode(UUID.randomUUID().toString());
+            emailChanged = true;
         }
         if (isChanged) {
             userRepository.save(savedUser);
+        }
+
+        if (emailChanged) {
+            mailSenderService.sendActivateCode(savedUser);
         }
     }
 

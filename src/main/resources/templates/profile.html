@@ -1182,7 +1182,7 @@
         <nav class="nav">
             <a href="/" class="nav-link">Home</a>
             <a href="/products" class="nav-link">Shop</a>
-            <a href="/users" sec:authorize="hasAnyAuthority('ROLE_ADMIN', 'ROLE_MANAGER')" class="nav-link">Users</a>
+            <a href="/users" sec:authorize="hasAnyAuthority('ROLE_ADMIN', 'ROLE_MANAGER')" class="nav-link">Admin Dash</a>
             <a href="#" class="nav-link">About</a>
             <a href="#" class="nav-link">Contact</a>
         </nav>
@@ -1208,11 +1208,14 @@
     <div id="profile" class="page active">
         <div class="container">
             <h1 style="margin-bottom: 2rem;">My Account</h1>
+            <p th:if="${!users.activated}">Your user is not activated!!!</p>
             <div class="profile-layout">
                 <aside class="profile-sidebar">
                     <div class="profile-avatar">JD</div>
-                    <h2 style="text-align: center; margin-bottom: 0.5rem;">John Doe</h2>
-                    <p style="text-align: center; color: var(--gray); margin-bottom: 2rem;">john.doe@email.com</p>
+                    <div th:object="${users}">
+                        <h2 style="text-align: center; margin-bottom: 0.5rem;" th:text="*{username}">John Doe</h2>
+                        <p style="text-align: center; color: var(--gray); margin-bottom: 2rem;" th:text="*{email}">john.doe@email.com</p>
+                    </div>
                     <ul class="profile-menu">
                         <li class="active" onclick="switchProfileTab('profile-info')">👤 Profile Information</li>
                         <li onclick="switchProfileTab('profile-orders'); showPage('orders')">📦 My Orders</li>
@@ -1224,24 +1227,32 @@
 
                 <div class="profile-content">
                     <h2 style="margin-bottom: 2rem;">Profile Information</h2>
-                    <form>
+                    <form th:action="@{/users/profile}" th:object="${users}" method="post">
                         <div class="form-group">
                             <label>Full Name</label>
-                            <input type="text" class="form-input" value="John Doe">
+                            <input type="text" th:field="*{username}" class="form-input" value="John Doe">
                         </div>
                         <div class="form-group">
                             <label>Email Address</label>
-                            <input type="email" class="form-input" value="john.doe@email.com">
+                            <input type="email" th:field="*{email}" class="form-input" value="john.doe@email.com">
                         </div>
                         <div class="form-group">
                             <label>Phone Number</label>
-                            <input type="tel" class="form-input" value="+1 (555) 123-4567">
+                            <input type="text" th:field="*{phoneNumber}" class="form-input" value="+1 (555) 123-4567">
                         </div>
                         <div class="form-group">
                             <label>Address</label>
-                            <input type="text" class="form-input" value="123 Main Street, New York, NY 10001">
+                            <input type="text" th:field="*{address}" class="form-input" value="123 Main Street, New York, NY 10001">
                         </div>
-                        <button type="submit" class="btn btn-primary" onclick="event.preventDefault(); alert('Profile updated successfully!')">Save Changes</button>
+                        <div class="form-group">
+                            <label>Password</label>
+                            <input type="password" th:field="*{password}" class="form-input">
+                        </div>
+                        <div class="form-group">
+                            <label>Matching Password</label>
+                            <input type="password" th:field="*{matchingPassword}" class="form-input">
+                        </div>
+                        <button type="submit" class="btn btn-primary">Save Changes</button>
                     </form>
                 </div>
             </div>
