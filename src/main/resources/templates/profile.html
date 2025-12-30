@@ -1197,7 +1197,7 @@
             <button sec:authorize="!isAuthenticated()" class="icon-btn"><a href="/login">👤Login</a>
             </button>
             <div sec:authorize="isAuthenticated()">
-                <button class="icon-btn"><a th:href="@{/users/profile}">👤<span sec:authentication="principal.username">Bill</span></a></button>
+                <button class="icon-btn"><a th:href="@{/users/profile}">👤<span sec:authentication="name">Bill</span></a></button>
                 <button sec:authorize="isAuthenticated()" class="icon-btn"><a href="/logout">➜]</a>
                 </button>
             </div>
@@ -1228,6 +1228,7 @@
                 <div class="profile-content">
                     <h2 style="margin-bottom: 2rem;">Profile Information</h2>
                     <form th:action="@{/users/profile}" th:object="${users}" method="post">
+                        <input type="hidden" th:field="*{id}"/>
                         <div class="form-group">
                             <label>Full Name</label>
                             <input type="text" th:field="*{username}" class="form-input" value="John Doe">

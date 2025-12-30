@@ -5,17 +5,19 @@ import com.isagulova.spring_eshop.dao.UserRepository;
 import com.isagulova.spring_eshop.domain.Role;
 import com.isagulova.spring_eshop.domain.User;
 import com.isagulova.spring_eshop.dto.UserDTO;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
-import java.util.UUID;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -24,6 +26,7 @@ public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
     private final MailSenderService mailSenderService;
+
 
     public UserServiceImpl(UserRepository userRepository, PasswordEncoder passwordEncoder, MailSenderService mailSenderService) {
         this.userRepository = userRepository;
@@ -40,7 +43,7 @@ public class UserServiceImpl implements UserService {
                 .name(userDTO.getUsername())
                 .password(passwordEncoder.encode(userDTO.getPassword()))
                 .email(userDTO.getEmail())
-                .role(Role.CLIENT)
+                .role(userDTO.getRole())
                 .activeCode(UUID.randomUUID().toString())
                 .address(userDTO.getAddress())
                 .phoneNumber(userDTO.getPhoneNumber())
@@ -66,6 +69,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public UserDTO toDTO(User user) {
         return UserDTO.builder()
+                .id(user.getId())
                 .username(user.getName())
                 .email(user.getEmail())
                 .phoneNumber(user.getPhoneNumber())
@@ -98,41 +102,6 @@ public class UserServiceImpl implements UserService {
         return userRepository.findByName(name);//findFirstByName
     }
 
-    @Transactional
-    @Override
-    public void updateProfile(UserDTO dto) {
-        User savedUser = userRepository.findByName(dto.getUsername());//findFirstByName
-        if (savedUser == null) {
-            throw new RuntimeException("User not found with username: " + dto.getUsername());
-        }
-        boolean isChanged = false;
-        if (dto.getPassword() != null && !dto.getPassword().isEmpty()) {
-            savedUser.setPassword(passwordEncoder.encode(dto.getPassword()));
-            isChanged = true;
-        }
-        if (!Objects.equals(dto.getAddress(), savedUser.getAddress())) {
-            savedUser.setAddress(dto.getAddress());
-            isChanged = true;
-        }
-        if (!Objects.equals(dto.getPhoneNumber(), savedUser.getPhoneNumber())) {
-            savedUser.setPhoneNumber(dto.getPhoneNumber());
-            isChanged = true;
-        }
-        boolean emailChanged = false;
-        if (!Objects.equals(dto.getEmail(), savedUser.getEmail())) {
-            savedUser.setEmail(dto.getEmail());
-            savedUser.setActiveCode(UUID.randomUUID().toString());
-            emailChanged = true;
-        }
-        if (isChanged) {
-            userRepository.save(savedUser);
-        }
-
-        if (emailChanged) {
-            mailSenderService.sendActivateCode(savedUser);
-        }
-    }
-
     @Override
     public boolean activateUser(String activateCode) {
         User user = userRepository.findByActiveCode(activateCode);
@@ -146,21 +115,83 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void deleteById(String username) {
-        User user = userRepository.findByName(username);
-        if (user == null) {
-            throw new RuntimeException("User not found with username: " + username);
+    public void deleteById(Long id) {
+        Optional<User> user = userRepository.findById(id);
+        if (user.isEmpty()) {
+            throw new RuntimeException("User not found with id: " + id);
         }
-        userRepository.delete(user);
+        userRepository.deleteById(id);
     }
-//    @Override
-//    public void updateById(String username){
-//        User user = userRepository.findByName(username);
-//        if (user == null) {
-//            throw new RuntimeException("User not found with username: " + username);
-//        }
-//        UserDTO dto = toDTO(user);
-//        updateProfile(dto);
-//    }
+
+    @Transactional
+    @Override
+    public void updateById(Long id, UserDTO dto) {
+        User savedUser = userRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("User not found with id: " + id));
+
+        boolean isChanged = false;
+        boolean usernameChanged = false;
+        boolean emailChanged = false;
+
+        if (dto.getPassword() != null && !dto.getPassword().isEmpty()) {
+            savedUser.setPassword(passwordEncoder.encode(dto.getPassword()));
+            isChanged = true;
+        }
+
+        if (!Objects.equals(dto.getAddress(), savedUser.getAddress())) {
+            savedUser.setAddress(dto.getAddress());
+            isChanged = true;
+        }
+
+        if (!Objects.equals(dto.getPhoneNumber(), savedUser.getPhoneNumber())) {
+            savedUser.setPhoneNumber(dto.getPhoneNumber());
+            isChanged = true;
+        }
+        if (!Objects.equals(dto.getRole(), savedUser.getRole())) {
+            savedUser.setRole(dto.getRole());
+            isChanged = true;
+        }
+
+        if (!Objects.equals(dto.getEmail(), savedUser.getEmail())) {
+            savedUser.setEmail(dto.getEmail());
+            savedUser.setActiveCode(UUID.randomUUID().toString());
+            emailChanged = true;
+            isChanged = true;
+        }
+
+        if (!Objects.equals(dto.getUsername(), savedUser.getName())) {
+            savedUser.setName(dto.getUsername());
+            usernameChanged = true;
+            isChanged = true;
+        }
+
+        if (isChanged) {
+            userRepository.save(savedUser);
+        }
+
+        if (emailChanged) {
+            mailSenderService.sendActivateCode(savedUser);
+        }
+
+        // ⬇️ ВАЖНО: обновляем SecurityContext
+        if (usernameChanged) {
+            updateAuthentication(savedUser);
+        }
+    }
+
+
+    private void updateAuthentication(User user) {
+        Authentication currentAuth =
+                SecurityContextHolder.getContext().getAuthentication();
+
+        UsernamePasswordAuthenticationToken newAuth =
+                new UsernamePasswordAuthenticationToken(
+                        user.getName(), // 🔥 новый username
+                        currentAuth.getCredentials(),
+                        currentAuth.getAuthorities()
+                );
+
+        SecurityContextHolder.getContext().setAuthentication(newAuth);
+    }
 
 }

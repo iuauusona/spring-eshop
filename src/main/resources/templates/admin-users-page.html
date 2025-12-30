@@ -455,7 +455,7 @@
             <button sec:authorize="!isAuthenticated()" class="icon-btn"><a href="/login">👤Login</a>
             </button>
             <div sec:authorize="isAuthenticated()">
-                <button class="icon-btn"><a th:href="@{/users/profile}">👤<span sec:authentication="principal.username">Bill</span></a></button>
+                <button class="icon-btn"><a th:href="@{/users/profile}">👤<span sec:authentication="name">Bill</span></a></button>
                 <button sec:authorize="isAuthenticated()" class="icon-btn"><a href="/logout">➜]</a>
                 </button>
             </div>
@@ -472,13 +472,19 @@
         <button class="btn btn-primary" onclick="toggleAddUserForm()">+ Add User</button>
     </div>
 
-    <div class="add-user-form" id="addUserForm">
-        <h3>Add New User</h3>
+    <div class="add-user-form"
+         id="addUserForm"
+         th:style="${editMode} ? 'display:block' : 'display:none'">
+
+        <h3 th:text="${editMode} ? 'Edit User' : 'Add New User'"></h3>
 
         <form class="form-grid"
-              th:action="@{/users/new}"
+              th:action="@{/users/save}"
               th:object="${user}"
               method="post">
+
+            <!-- ID (скрыто) -->
+            <input type="hidden" th:field="*{id}"/>
 
             <input type="text" th:field="*{username}" placeholder="Username" required>
             <input type="email" th:field="*{email}" placeholder="Email" required>
@@ -497,8 +503,11 @@
             <input type="password" th:field="*{matchingPassword}" placeholder="Confirm Password">
 
             <div class="form-actions">
-                <button type="submit" class="btn btn-primary">Save</button>
-                <button type="button" class="btn btn-secondary" onclick="toggleAddUserForm()">Cancel</button>
+                <button type="submit" class="btn btn-primary"
+                        th:text="${editMode} ? 'Update User' : 'Save User'">
+                </button>
+
+                <a href="/users" class="btn btn-secondary">Cancel</a>
             </div>
         </form>
     </div>
@@ -532,10 +541,10 @@
                 <td th:text="${user.activated ? 'Yes' : 'No'}"></td>
                 <td th:text="${user.archived ? 'Yes' : 'No'}"></td>
                 <td class="actions">
-                    <form th:action="@{'/users/update/' + ${user.username}}" method="get">
+                    <form th:action="@{'/users/update/' + ${user.id}}" method="get">
                         <button type="submit" class="btn btn-sm btn-warning">Edit</button>
                     </form>
-                    <form th:action="@{'/users/delete/' + ${user.username}}" method="post" th:onsubmit="return confirm('Delete this user?')" style="display:inline">
+                    <form th:action="@{'/users/delete/' + ${user.id}}" method="post" th:onsubmit="return confirm('Delete this user?')" style="display:inline">
                         <button type="submit" class="btn btn-sm btn-danger">Delete</button>
                     </form>
                 </td>

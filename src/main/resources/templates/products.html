@@ -1198,7 +1198,7 @@
             <button sec:authorize="!isAuthenticated()" class="icon-btn"><a href="/login">👤Login</a>
             </button>
             <div sec:authorize="isAuthenticated()">
-                <button class="icon-btn"><a th:href="@{/users/profile}">👤<span sec:authentication="principal.username">Bill</span></a></button>
+                <button class="icon-btn"><a th:href="@{/users/profile}">👤<span sec:authentication="name">Bill</span></a></button>
                 <button sec:authorize="isAuthenticated()" class="icon-btn"><a href="/logout">➜]</a>
                 </button>
             </div>

@@ -1,6 +1,7 @@
 package com.isagulova.spring_eshop.controller;
 
 
+import com.isagulova.spring_eshop.dao.UserRepository;
 import com.isagulova.spring_eshop.domain.User;
 import com.isagulova.spring_eshop.dto.UserDTO;
 import com.isagulova.spring_eshop.service.UserService;
@@ -13,24 +14,19 @@ import org.springframework.web.bind.annotation.*;
 import java.security.Principal;
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 
 @Controller
 @RequestMapping("users")
 public class UserController {
 
     private final UserService userService;
+    private final UserRepository userRepository;
 
-    public UserController(UserService userService) {
+    public UserController(UserService userService, UserRepository userRepository) {
         this.userService = userService;
+        this.userRepository = userRepository;
     }
-
-//    @PreAuthorize("hasRole('ADMIN')")
-//    @GetMapping("/new")
-//    public String newModel(Model model) {
-//        System.out.println("Called method newUser");
-//        model.addAttribute("user", new UserDTO());
-//        return "user";
-//    }
 
     @PostAuthorize("isAuthenticated() and #username == authentication.principal.username")
     @GetMapping("/{name}/roles")
@@ -51,6 +47,7 @@ public class UserController {
         User user = userService.findByName(principal.getName());
 
         UserDTO userDTO = UserDTO.builder()
+                .id(user.getId())
                 .username(user.getName())
                 .email(user.getEmail())
                 .address(user.getAddress())
@@ -64,7 +61,7 @@ public class UserController {
     @PreAuthorize("isAuthenticated()")
     @PostMapping("/profile")
     public String updateProfileUser(UserDTO dto, Model model, Principal principal) {
-        if (principal == null || !Objects.equals(principal.getName(), dto.getUsername())) {
+        if (principal == null) {
             throw new RuntimeException("You are not authorized");
         }
         if (dto.getPassword() != null
@@ -74,7 +71,7 @@ public class UserController {
             //нужно добавить какое-то сообщение, но сделаем это другой раз
             return "profile";
         }
-        userService.updateProfile(dto);
+        userService.updateById(dto.getId(), dto);
         return "redirect:/users/profile";
     }
 
@@ -95,42 +92,52 @@ public class UserController {
     }
 
     @PreAuthorize("hasRole('ADMIN')")
-    @PostMapping("/new")
-    public String saveUser(UserDTO dto, Model model) {
-        if (userService.save(dto)) {
-            return "redirect:/users";
-        } else {
-            model.addAttribute("user", dto);
+    @PostMapping("/save")
+    public String saveOrUpdateUser(@ModelAttribute("user") UserDTO dto, Model model) {
+        if (dto.getPassword() != null
+                && !dto.getPassword().isEmpty()
+                && !Objects.equals(dto.getPassword(), dto.getMatchingPassword())) {
+
+            model.addAttribute("roles", List.of("ADMIN", "MANAGER", "CLIENT"));
+            model.addAttribute("editMode", dto.getId() != null);
             return "admin-users-page";
         }
-    }
-    // Удаление по ID
-    @PreAuthorize("hasRole('ADMIN')")
-    @PostMapping("/delete/{username}")
-    public String deleteUser(@PathVariable String username) {
-        userService.deleteById(username);
+
+        if (dto.getId() == null) {
+            userService.save(dto);
+            System.out.println("User saved: " + dto);
+        } else {
+            userService.updateById(dto.getId(), dto);
+        }
         return "redirect:/users";
     }
 
-//    @PostMapping("/update/{username}")
-//    public String updateUser(@PathVariable String username,  UserDTO dto, Model model) {
-//        if (dto.getPassword() != null
-//                && !dto.getPassword().isEmpty()
-//                && !Objects.equals(dto.getPassword(), dto.getMatchingPassword())) {
-//            model.addAttribute("users", dto);
-//            return "admin-users-page";
-//        }
-//        userService.updateById(username);
-//        return "redirect:/users";
-//    }
-//    @GetMapping("/update/{username}")
-//    public String updateUser(@PathVariable String username, Model model) {
-//        User user = userService.findByName(username);
-//        UserDTO dto = userService.toDTO(user);
-//        model.addAttribute("user", dto);
-//        model.addAttribute("roles", List.of("ADMIN", "MANAGER", "CLIENT"));
-//        return "admin-users-page"; // та же страница с формой
-//    }
+    // Удаление по ID
+    @PreAuthorize("hasRole('ADMIN')")
+    @PostMapping("/delete/{id}")
+    public String deleteUser(@PathVariable Long id) {
+        userService.deleteById(id);
+        return "redirect:/users";
+    }
+
+    @PreAuthorize("hasRole('ADMIN')")
+    @GetMapping("/update/{id}")
+    public String editUser(@PathVariable Long id, Model model) {
+
+        User user = userRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("User not found with id: " + id));
+        if (user == null) {
+            new RuntimeException("User with id " + id + " not found");
+        }
+        UserDTO dto = userService.toDTO(user);
+
+        model.addAttribute("user", dto);
+        model.addAttribute("roles", List.of("ADMIN", "MANAGER", "CLIENT"));
+        model.addAttribute("editMode", true); // 🔥 важно
+
+        return "admin-users-page";
+    }
+
 
 
     @GetMapping("/activate/{code}")

@@ -16,12 +16,13 @@ public interface UserService extends UserDetailsService { //security
 
     User findByName(String name);
 
-    @Transactional
-    void updateProfile(UserDTO dto);
+//    @Transactional
+//    void updateProfile(UserDTO dto);
 
     boolean activateUser(String activateCode);
 
-    void deleteById(String username);
-//    void updateById(String username);
+    void deleteById(Long id);
+    @Transactional
+    void updateById(Long id, UserDTO dto);
     UserDTO toDTO(User user);
 }
