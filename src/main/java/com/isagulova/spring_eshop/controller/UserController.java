@@ -51,6 +51,7 @@ public class UserController {
                 .username(user.getName())
                 .email(user.getEmail())
                 .address(user.getAddress())
+                .role(user.getRole())
                 .phoneNumber(user.getPhoneNumber())
                 .activated(user.getActiveCode() == null)
                 .build();
@@ -71,7 +72,7 @@ public class UserController {
             //нужно добавить какое-то сообщение, но сделаем это другой раз
             return "profile";
         }
-        userService.updateById(dto.getId(), dto);
+        userService.updateById(dto.getId(), dto, true);
         return "redirect:/users/profile";
     }
 
@@ -107,7 +108,7 @@ public class UserController {
             userService.save(dto);
             System.out.println("User saved: " + dto);
         } else {
-            userService.updateById(dto.getId(), dto);
+            userService.updateById(dto.getId(), dto, false);
         }
         return "redirect:/users";
     }

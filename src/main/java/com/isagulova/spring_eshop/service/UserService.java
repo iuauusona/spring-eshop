@@ -23,6 +23,6 @@ public interface UserService extends UserDetailsService { //security
 
     void deleteById(Long id);
     @Transactional
-    void updateById(Long id, UserDTO dto);
+    void updateById(Long id, UserDTO dto,  boolean isInProfile);
     UserDTO toDTO(User user);
 }

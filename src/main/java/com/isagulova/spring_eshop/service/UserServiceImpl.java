@@ -125,7 +125,7 @@ public class UserServiceImpl implements UserService {
 
     @Transactional
     @Override
-    public void updateById(Long id, UserDTO dto) {
+    public void updateById(Long id, UserDTO dto, boolean isInProfile) {
         User savedUser = userRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("User not found with id: " + id));
 
@@ -172,9 +172,8 @@ public class UserServiceImpl implements UserService {
         if (emailChanged) {
             mailSenderService.sendActivateCode(savedUser);
         }
-
         // ⬇️ ВАЖНО: обновляем SecurityContext
-        if (usernameChanged) {
+        if (usernameChanged && isInProfile) {
             updateAuthentication(savedUser);
         }
     }

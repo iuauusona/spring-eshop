@@ -1182,7 +1182,7 @@
         <nav class="nav">
             <a href="/" class="nav-link">Home</a>
             <a href="/products" class="nav-link">Shop</a>
-            <a href="/users/adminDash" sec:authorize="hasAnyAuthority('ROLE_ADMIN', 'ROLE_MANAGER')" class="nav-link">Admin Dash</a>
+            <a href="/users/adminDash" sec:authorize="hasAnyAuthority('ROLE_ADMIN')" class="nav-link">Admin Dash</a>
             <a href="#" class="nav-link">About</a>
             <a href="#" class="nav-link">Contact</a>
         </nav>
@@ -1245,6 +1245,7 @@
                             <label>Address</label>
                             <input type="text" th:field="*{address}" class="form-input" value="123 Main Street, New York, NY 10001">
                         </div>
+                        <input type="hidden" th:field="*{role}"/>
                         <div class="form-group">
                             <label>Password</label>
                             <input type="password" th:field="*{password}" class="form-input">
